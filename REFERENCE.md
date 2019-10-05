@@ -1,3 +1,17 @@
+## Note: If your component doesn't have to hold state, use function components, result in very less code. Try to compile below example code in babel compiler online and see major difference.
+
+    function Welcome(props) {
+      return <h1>Hello, {props.name}</h1>;
+    }
+
+Class
+
+    class Welcome extends React.Component {
+      render() {
+        return <h1>Hello, {this.props.name}</h1>;
+      }
+    }
+
 ### Conditional Rendering
 
 In React, you can create distinct components that encapsulate behavior you need. Then, you can render only some of them, depending on the state of your application.
