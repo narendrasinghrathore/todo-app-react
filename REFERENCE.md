@@ -81,37 +81,39 @@ You may embed any expressions in JSX by wrapping them in curly braces. This incl
       document.getElementById('root')
     );
 
-
 ## It works because in JavaScript, true && expression always evaluates to expression, and false && expression always evaluates to false.
 
-
 ## Inline If-Else with Conditional Operator
+
 Another method for conditionally rendering elements inline is to use the JavaScript conditional operator condition ? true : false.
 
 ## Preventing Component from Rendering
+
 In rare cases you might want a component to hide itself even though it was rendered by another component. To do this return null instead of its render output.
 
 ### Returning null from a component’s render method does not affect the firing of the component’s lifecycle methods. For instance componentDidUpdate will still be called.
 
 ## Keys
+
 Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity:
+
     const numbers = [1, 2, 3, 4, 5];
     const listItems = numbers.map((number) =>
-        <li key={number.toString()}>
-          {number}
-        </li>
+      <li key={number.toString()}>
+        {number}
+      </li>
     );
 
 The best way to pick a key is to use a string that uniquely identifies a list item among its siblings. Most often you would use IDs from your data as keys
 
 When you don’t have stable IDs for rendered items, you may use the item index as a key as a last resort:
-    const todoItems = todos.map((todo, index) =>
-      // Only do this if items have no stable IDs
-      <li key={index}>
-        {todo.text}
-      </li>
+const todoItems = todos.map((todo, index) =>
+// Only do this if items have no stable IDs
+    <li key={index}>
+    {todo.text}
+    </li>
     );
 
-We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. 
+We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state.
 
 If you choose not to assign an explicit key to list items then React will default to using indexes as keys.
