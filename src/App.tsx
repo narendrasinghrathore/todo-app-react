@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./list.svg";
 import "./App.css";
 import Greet from "./components/stateless/Greet";
 
