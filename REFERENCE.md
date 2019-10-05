@@ -118,3 +118,27 @@ When you don’t have stable IDs for rendered items, you may use the item index 
 We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state.
 
 If you choose not to assign an explicit key to list items then React will default to using indexes as keys.
+
+## Keys Must Only Be Unique Among Siblings
+Keys used within arrays should be unique among their siblings. However they don’t need to be globally unique.
+
+Keys serve as a hint to React but they don’t get passed to your components. If you need the same value in your component, pass it explicitly as a prop with a different name
+
+
+
+
+JSX allows embedding any expression in curly braces so we could inline the map() result:
+
+
+    function NumberList(props) {
+      const numbers = props.numbers;
+      return (
+        <ul>
+          {numbers.map((number) =>
+            <ListItem key={number.toString()}
+                      value={number} />
+
+          )}
+        </ul>
+      );
+    }
