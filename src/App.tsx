@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Greet from "./components/stateless/Greet";
+import { TodoHome } from "./components/statefull/TodoHome";
 
 export default class App extends React.Component {
   render() {
@@ -9,6 +10,7 @@ export default class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <Greet name={name} />
+          <TodoHome />
         </header>
       </div>
     );
