@@ -1,3 +1,5 @@
+import { ITodoListItem } from "./TodoListItem";
+
 export interface ITodoList {
-    list: any[];
+    list: ITodoListItem[];
 }

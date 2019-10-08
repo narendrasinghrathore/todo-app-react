@@ -1,4 +1,9 @@
 export interface ITodoListItem {
-    id?: number;
+    id?: string;
     name?: string;
+    content?: string;
+}
+export interface ITodoAdd {
+    item?: ITodoListItem,
+    handleAddNewItem: Function;
 }

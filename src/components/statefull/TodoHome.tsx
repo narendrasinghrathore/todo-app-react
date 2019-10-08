@@ -1,19 +1,38 @@
 import { TodoList } from "../stateless/TodoList";
 import React from "react";
 import { ITodoListItem } from "../../interfaces/TodoListItem";
+import { TodoAdd } from "./TodoAdd";
+import { ITodoHome } from "../../interfaces/TodoHome";
 
-export class TodoHome extends React.Component {
-  sameplDataList: ITodoListItem[] = [
-    {
-      id: 1,
-      name: "Item 1"
-    },
-    {
-      id: 2,
-      name: "Item 2"
-    }
-  ];
+export class TodoHome extends React.Component<{}, ITodoHome> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      list: [
+        {
+          id: 'b77d409a-10cd-4a47-8e94-b0cd0ab50aa1',
+          name: "Item 1"
+        },
+        {
+          id: 'b77d409a-10cd-4a47-8e94-b0cd0ab50aa2',
+          name: "Item 2"
+        }
+      ]
+    };
+  }
+
+  onNewItem = (item: ITodoListItem) => {
+    const list = [...this.state.list, item];
+    this.setState({
+      list
+    });
+  };
   render() {
-    return <TodoList list={this.sameplDataList} />;
+    return (
+      <div>
+        <TodoAdd handleAddNewItem={this.onNewItem} />
+        <TodoList list={this.state.list} />
+      </div>
+    );
   }
 }
