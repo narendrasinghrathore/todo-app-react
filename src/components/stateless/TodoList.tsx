@@ -1,7 +1,7 @@
 import { ITodoList } from "../../interfaces/TodoList";
 import React from "react";
 import { ITodoListItem } from "../../interfaces/TodoListItem";
-import { TodoListItem } from "./TodoListItem";
+import { TodoListItem } from "./TodoListItem/TodoListItem";
 
 export class TodoList extends React.Component<ITodoList> {
   render() {
@@ -12,7 +12,7 @@ export class TodoList extends React.Component<ITodoList> {
     } else {
       list = this.props.list.map((item: ITodoListItem, index: number) => {
         return <TodoListItem key={item.id} name={item.name} />;
-      });
+      }).reverse();
     }
 
     return list;

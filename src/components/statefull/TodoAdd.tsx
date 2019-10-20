@@ -5,11 +5,14 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
   constructor(props: any) {
     super(props);
     this.state = {
-      content: "f",
-      name: "f",
+      content: "",
+      name: "",
       id: ""
     };
   }
+  disableAddButton = () =>
+    this.state.name.length > 0 && this.state.content.length > 0 ? false : true;
+
   /**
    * Handle form submit
    */
@@ -22,7 +25,8 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
   handleChange = (event: any) => {
     const target = event.target;
     const name = target.name;
-    const value = target.value;
+    const value: string = target.value;
+
     this.setState({
       [name]: value
     });
@@ -43,7 +47,11 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
           onChange={this.handleChange}
           type="text"
         />
-        <button onClick={this.handleFormSubmit} type="button">
+        <button
+          disabled={this.disableAddButton()}
+          onClick={this.handleFormSubmit}
+          type="button"
+        >
           Add
         </button>
       </div>
