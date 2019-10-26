@@ -1,7 +1,28 @@
 import React from "react";
 import { ITodoListItem, ITodoAdd } from "../../interfaces/TodoListItem";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = () =>
+  makeStyles(theme => ({
+    fab: {
+      margin: theme.spacing(3)
+    },
+    extendedIcon: {
+      marginRight: theme.spacing(1)
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200
+    },
+  }));
 export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
+  classes = useStyles();
+  state: ITodoListItem = {};
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -35,25 +56,36 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
   render() {
     return (
       <div>
-        <input
+        <TextField
           name="name"
+          required
+          id="standard-required"
+          label="Title"
           value={this.state.name}
           onChange={this.handleChange}
-          type="text"
+          defaultValue="Hello World"
+          className={this.classes.textField}
+          margin="normal"
         />
-        <input
+        <TextField
+          required
           name="content"
+          id="standard-required"
+          label="Description"
           value={this.state.content}
           onChange={this.handleChange}
-          type="text"
+          className={this.classes.textField}
+          margin="normal"
         />
-        <button
+        <Fab
+          color="primary"
           disabled={this.disableAddButton()}
           onClick={this.handleFormSubmit}
-          type="button"
+          aria-label="add"
+          className={this.classes.fab}
         >
-          Add
-        </button>
+          <AddIcon />
+        </Fab>
       </div>
     );
   }

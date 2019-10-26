@@ -1,4 +1,4 @@
-import { TodoList } from "../stateless/TodoList";
+import { TodoListContainer } from "../stateless/TodoList/TodoList";
 import React from "react";
 import { ITodoListItem } from "../../interfaces/TodoListItem";
 import { TodoAdd } from "./TodoAdd";
@@ -32,7 +32,7 @@ export class TodoHome extends React.Component<{}, ITodoHome> {
     return (
       <div>
         <TodoAdd handleAddNewItem={this.onNewItem} />
-        <TodoList list={this.state.list} />
+        <TodoListContainer list={this.state.list} />
       </div>
     );
   }
