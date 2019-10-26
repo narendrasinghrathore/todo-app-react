@@ -63,7 +63,6 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
           label="Title"
           value={this.state.name}
           onChange={this.handleChange}
-          defaultValue="Hello World"
           className={this.classes.textField}
           margin="normal"
         />

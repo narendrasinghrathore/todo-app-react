@@ -2,7 +2,8 @@ import { ITodoList } from "../../../interfaces/TodoList";
 import React from "react";
 import { ITodoListItem } from "../../../interfaces/TodoListItem";
 import { TodoListItem } from "../TodoListItem/TodoListItem";
-import "./TodoList.css";
+import "./TodoListContainer.css";
+import List from "@material-ui/core/List";
 export class TodoListContainer extends React.Component<ITodoList> {
   render() {
     let list;
@@ -12,11 +13,19 @@ export class TodoListContainer extends React.Component<ITodoList> {
     } else {
       list = this.props.list
         .map((item: ITodoListItem, index: number) => {
-          return <TodoListItem key={item.id} name={item.name} />;
+          return (
+            <TodoListItem
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              content={item.content}
+              onRemoveItem={this.props.onRemoveItem}
+            />
+          );
         })
         .reverse();
     }
 
-    return <div className="list-container">{list}</div>;
+    return <List className="list-container">{list}</List>;
   }
 }

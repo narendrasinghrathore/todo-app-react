@@ -1,9 +1,8 @@
-import { TodoListContainer } from "../stateless/TodoList/TodoList";
+import { TodoListContainer } from "../stateless/TodoListContainer/TodoListContainer";
 import React from "react";
 import { ITodoListItem } from "../../interfaces/TodoListItem";
 import { TodoAdd } from "./TodoAdd";
 import { ITodoHome } from "../../interfaces/TodoHome";
-import { Dialog } from "../stateless/Dialog/Dialog";
 
 export class TodoHome extends React.Component<{}, ITodoHome> {
   constructor(props: any) {
@@ -28,11 +27,22 @@ export class TodoHome extends React.Component<{}, ITodoHome> {
       list
     });
   };
+  onRemoveItem = (id: string) => {
+    const list = this.state.list.filter(
+      (item: ITodoListItem) => item.id !== id
+    );
+    this.setState({
+      list
+    });
+  };
   render() {
     return (
       <div>
         <TodoAdd handleAddNewItem={this.onNewItem} />
-        <TodoListContainer list={this.state.list} />
+        <TodoListContainer
+          onRemoveItem={this.onRemoveItem}
+          list={this.state.list}
+        />
       </div>
     );
   }
