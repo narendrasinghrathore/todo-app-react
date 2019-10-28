@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
+import "./TodoAdd.css";
 import { ITodoListItem, ITodoAdd } from "../../interfaces/TodoListItem";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -7,6 +8,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = () =>
   makeStyles(theme => ({
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "column"
+    },
     fab: {
       margin: theme.spacing(3)
     },
@@ -14,10 +20,10 @@ const useStyles = () =>
       marginRight: theme.spacing(1)
     },
     textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
+      marginLeft: theme.spacing(3),
+      marginRight: theme.spacing(3),
       width: 200
-    },
+    }
   }));
 export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
   classes = useStyles();
@@ -31,6 +37,7 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
       id: ""
     };
   }
+
   disableAddButton = () =>
     this.state.name.length > 0 && this.state.content.length > 0 ? false : true;
 
@@ -55,33 +62,40 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
 
   render() {
     return (
-      <div>
-        <TextField
-          name="name"
-          required
-          id="standard-required"
-          label="Title"
-          value={this.state.name}
-          onChange={this.handleChange}
-          className={this.classes.textField}
-          margin="normal"
-        />
-        <TextField
-          required
-          name="content"
-          id="standard-required"
-          label="Description"
-          value={this.state.content}
-          onChange={this.handleChange}
-          className={this.classes.textField}
-          margin="normal"
-        />
+      <div className="TodoAddContainer">
+        <Fragment>
+          <TextField
+            name="name"
+            required
+            id="standard-required"
+            label="Title"
+            value={this.state.name}
+            onChange={this.handleChange}
+            classes={this.classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+        </Fragment>
+        <Fragment>
+          <TextField
+            required
+            name="content"
+            id="standard-required"
+            label="Description"
+            value={this.state.content}
+            onChange={this.handleChange}
+            classes={this.classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+        </Fragment>
+
         <Fab
           color="primary"
           disabled={this.disableAddButton()}
           onClick={this.handleFormSubmit}
           aria-label="add"
-          className={this.classes.fab}
+          classes={{ root: this.classes.fab }}
         >
           <AddIcon />
         </Fab>

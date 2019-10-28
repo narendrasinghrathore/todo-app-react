@@ -1,7 +1,7 @@
 import { TodoListContainer } from "../stateless/TodoListContainer/TodoListContainer";
-import React from "react";
+import React, { Fragment } from "react";
 import { ITodoListItem } from "../../interfaces/TodoListItem";
-import { TodoAdd } from "./TodoAdd";
+import { TodoAdd } from "./TodoAdd/TodoAdd";
 import { ITodoHome } from "../../interfaces/TodoHome";
 
 export class TodoHome extends React.Component<{}, ITodoHome> {
@@ -37,13 +37,13 @@ export class TodoHome extends React.Component<{}, ITodoHome> {
   };
   render() {
     return (
-      <div>
+      <Fragment>
         <TodoAdd handleAddNewItem={this.onNewItem} />
         <TodoListContainer
           onRemoveItem={this.onRemoveItem}
           list={this.state.list}
         />
-      </div>
+      </Fragment>
     );
   }
 }

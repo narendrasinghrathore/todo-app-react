@@ -26,6 +26,6 @@ export class TodoListContainer extends React.Component<ITodoList> {
         .reverse();
     }
 
-    return <List className="list-container">{list}</List>;
+    return <List classes={{ root: "list-container" }}>{list}</List>;
   }
 }
