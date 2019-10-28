@@ -1,8 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-Project demo:
+Creating a basic todo application, screenshot below:
 
 <img src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Mobile%20device.PNG"/>
+
+
+We would try to use every api from react.org docs and integrate in our application based on scenario we face and trying to improve performance.
+
 
 ## Available Scripts
 
