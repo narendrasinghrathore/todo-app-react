@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Project demo:
+
+<img src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Mobile%20device.PNG"/>
+
 ## Available Scripts
 
 In the project directory, you can run:
