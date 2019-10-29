@@ -16,17 +16,18 @@ export function TodoListItem(props: any) {
 
   const name = props.name;
   const content = props.content;
+  const color = props.color;
   return (
     <animated.div style={config}>
       <ListItem>
         <ListItemAvatar>
           <Avatar>
-            <EventNoteIcon color="primary" />
+            <EventNoteIcon color={color} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
           aria-label={name}
-          color="primary"
+          color={color}
           primary={name}
           secondary={content}
         />
@@ -36,7 +37,7 @@ export function TodoListItem(props: any) {
             edge="end"
             aria-label={"delete " + name}
           >
-            <DeleteIcon color="primary" />
+            <DeleteIcon color={color} />
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>

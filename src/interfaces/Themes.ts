@@ -1,0 +1,1 @@
+export interface IThemes { label: string, color: string }

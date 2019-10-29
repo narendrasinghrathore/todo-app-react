@@ -5,6 +5,8 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import { MyThemeContext } from "../../../context/ThemeManager";
+import { IThemes } from "../../../interfaces/Themes";
 
 const useStyles = () =>
   makeStyles(theme => ({
@@ -26,7 +28,15 @@ const useStyles = () =>
     }
   }));
 export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
+  /**
+   * The contextType property on a class can be assigned a Context object created by React.createContext().
+   * This lets you consume the nearest current value of that Context type using this.context.
+   * You can reference this in any of the lifecycle methods including the render function.
+   */
+  static contextType = MyThemeContext;
+
   classes = useStyles();
+
   state: ITodoListItem = {};
 
   constructor(props: any) {
@@ -36,6 +46,7 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
       name: "",
       id: ""
     };
+    this.theme = this.context;
   }
 
   disableAddButton = () =>
@@ -60,7 +71,8 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
     });
   };
 
-  render() {
+  render = () => {
+    let theme: IThemes = this.context;
     return (
       <div className="TodoAddContainer">
         <Fragment>
@@ -91,7 +103,7 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
         </Fragment>
 
         <Fab
-          color="primary"
+          color={theme.color}
           disabled={this.disableAddButton()}
           onClick={this.handleFormSubmit}
           aria-label="add"
@@ -101,5 +113,5 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
         </Fab>
       </div>
     );
-  }
+  };
 }

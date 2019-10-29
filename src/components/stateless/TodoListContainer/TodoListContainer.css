@@ -1,9 +1,15 @@
 .list-container {
-    height: 200px;
-    overflow-y: auto;
-    margin: 10px !important;
-    border-radius: 4px;
-    background-color: #cccccc;
-    box-sizing: content-box;
-    box-shadow: 0 1px 2px 2px #d0d0d0;
+  height: 200px;
+  overflow-y: auto;
+  margin: 10px !important;
+  border-radius: 4px;
+  background-color: #cccccc;
+  box-sizing: content-box;
+  box-shadow: 0 1px 2px 2px #d0d0d0;
+}
+
+.no-item {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
 }
