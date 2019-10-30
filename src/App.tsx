@@ -6,6 +6,7 @@ import { MyThemeContext } from "./context/ThemeManager";
 import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
 import { IThemes } from "./interfaces/Themes";
 import { IAppState } from "./interfaces/App";
+import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 
 export default class App extends React.Component<any, IAppState> {
   themeList: IThemes[] = [
@@ -31,17 +32,22 @@ export default class App extends React.Component<any, IAppState> {
   render() {
     const name = "Narendra";
     return (
-      <div className="App">
-        <header className="App-header">
-          <Greet name={name} />
-          <ThemeWidget themes={this.themeList} changeTheme={this.changeTheme} />
-        </header>
-        <Fragment>
-          <MyThemeContext.Provider value={this.state.theme}>
-            <TodoHome />
-          </MyThemeContext.Provider>
-        </Fragment>
-      </div>
+      <ErrorBoundaryComponent>
+        <div className="App">
+          <header className="App-header">
+            <Greet name={name} />
+            <ThemeWidget
+              themes={this.themeList}
+              changeTheme={this.changeTheme}
+            />
+          </header>
+          <Fragment>
+            <MyThemeContext.Provider value={this.state.theme}>
+              <TodoHome />
+            </MyThemeContext.Provider>
+          </Fragment>
+        </div>
+      </ErrorBoundaryComponent>
     );
   }
 }
