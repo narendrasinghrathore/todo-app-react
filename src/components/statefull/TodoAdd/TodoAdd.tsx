@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./TodoAdd.css";
-import { ITodoListItem, ITodoAdd } from "../../interfaces/TodoListItem";
+import { ITodoListItem, ITodoAdd } from "../../../interfaces/TodoListItem";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
@@ -35,7 +35,7 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
    */
   static contextType = MyThemeContext;
 
-  classes = useStyles();
+  classes: any = useStyles();
 
   state: ITodoListItem = {};
 
@@ -46,11 +46,15 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
       name: "",
       id: ""
     };
-    this.theme = this.context;
+
+    this.disableAddButton = this.disableAddButton.bind(this);
   }
 
-  disableAddButton = () =>
-    this.state.name.length > 0 && this.state.content.length > 0 ? false : true;
+  disableAddButton() {
+    return this.state!.name!.length > 0 && this.state!.content!.length > 0
+      ? false
+      : true;
+  }
 
   /**
    * Handle form submit
@@ -73,6 +77,8 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
 
   render = () => {
     let theme: IThemes = this.context;
+    let color: string | undefined = theme.color;
+
     return (
       <div className="TodoAddContainer">
         <Fragment>
@@ -83,7 +89,7 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
             label="Title"
             value={this.state.name}
             onChange={this.handleChange}
-            classes={this.classes.textField}
+            classes={this.classes!.textField}
             margin="normal"
             variant="outlined"
           />
@@ -96,18 +102,17 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
             label="Description"
             value={this.state.content}
             onChange={this.handleChange}
-            classes={this.classes.textField}
+            classes={this.classes!.textField}
             margin="normal"
             variant="outlined"
           />
         </Fragment>
-
         <Fab
-          color={theme.color}
+          color={color}
           disabled={this.disableAddButton()}
           onClick={this.handleFormSubmit}
           aria-label="add"
-          classes={{ root: this.classes.fab }}
+          classes={{ root: this.classes!.fab }}
         >
           <AddIcon />
         </Fab>

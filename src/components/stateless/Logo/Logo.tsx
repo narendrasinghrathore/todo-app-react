@@ -1,6 +1,6 @@
 import React from "react";
-import logo from "../../assets/sunny_day.svg";
-import { ILogo } from "../../interfaces/Logo";
+import logo from "../../../assets/sunny_day.svg";
+import { ILogo } from "../../../interfaces/Logo";
 export default class Logo extends React.Component<ILogo> {
   render() {
     const src = this.props.src || logo;

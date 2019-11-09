@@ -1,1 +1,1 @@
-export interface IThemes { label: string, color: string }
+export interface IThemes { label: string; color: string; }

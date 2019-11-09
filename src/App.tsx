@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./App.css";
-import Greet from "./components/stateless/Greet";
+import Greet from "./components/stateless/Greet/Greet";
 import { TodoHome } from "./components/statefull/TodoHome";
 import { MyThemeContext } from "./context/ThemeManager";
 import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
