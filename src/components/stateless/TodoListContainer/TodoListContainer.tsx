@@ -21,7 +21,7 @@ export class TodoListContainer extends React.Component<ITodoList> {
     if (len.length === 0) {
       list = <p className="no-item">No items in list</p>;
     } else {
-      list = this.props.list
+      list = this!.props!.list!
         .map((item: ITodoListItem, index: number) => {
           return (
             <TodoListItem

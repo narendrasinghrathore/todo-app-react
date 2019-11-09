@@ -7,7 +7,6 @@ import Logo from "../Logo/Logo";
 // logos
 import logoNight from "../../../assets/night.svg";
 import logoNoon from "../../../assets/noon.svg";
-import { ILogo } from "../../../interfaces/Logo";
 
 export default class Greet extends React.Component<IGreet> {
   message: string;
@@ -18,9 +17,10 @@ export default class Greet extends React.Component<IGreet> {
   constructor(props: any) {
     super(props);
     this.message = this.props.name ? `, ${this.props.name}!` : " !!!";
+    this.setLogo();
   }
 
-  componentDidUpdate() {
+  setLogo = () => {
     switch (greetUser()) {
       case IDay.morning:
         this.logo = <Logo src="" alt="logo morning" />;
@@ -34,7 +34,7 @@ export default class Greet extends React.Component<IGreet> {
       default:
         this.logo = <Logo src="" alt="logo" />;
     }
-  }
+  };
 
   render() {
     return (

@@ -4,14 +4,14 @@ import Greet from "./components/stateless/Greet/Greet";
 import { TodoHome } from "./components/statefull/TodoHome";
 import { MyThemeContext } from "./context/ThemeManager";
 import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
-import { IThemes } from "./interfaces/Themes";
+import { IThemes, Colors } from "./interfaces/Themes";
 import { IAppState } from "./interfaces/App";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 
 export default class App extends React.Component<any, IAppState> {
   themeList: IThemes[] = [
-    { label: "primary theme", color: "primary" },
-    { label: "secondary theme", color: "secondary" }
+    { label: "primary theme", color: Colors.primary },
+    { label: "secondary theme", color: Colors.secondary }
   ];
 
   constructor(props: any) {

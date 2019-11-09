@@ -26,13 +26,13 @@ export class TodoHome extends React.Component<{}, ITodoHome> {
   }
 
   onNewItem = (item: ITodoListItem) => {
-    const list = this.state.list.concat([item]);
+    const list = this!.state!.list!.concat([item]);
     this.setState({
       list
     });
   };
   onRemoveItem = (id: string) => {
-    const list = this.state.list.filter(
+    const list = this.state!.list!.filter(
       (item: ITodoListItem) => item.id !== id
     );
     this.setState({
@@ -45,7 +45,7 @@ export class TodoHome extends React.Component<{}, ITodoHome> {
         <TodoAdd handleAddNewItem={this.onNewItem} />
         <TodoListContainer
           onRemoveItem={this.onRemoveItem}
-          list={this.state.list}
+          list={this!.state!.list}
         />
       </Fragment>
     );

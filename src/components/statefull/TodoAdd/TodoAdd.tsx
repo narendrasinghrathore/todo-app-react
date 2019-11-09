@@ -77,7 +77,7 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
 
   render = () => {
     let theme: IThemes = this.context;
-    let color: string | undefined = theme.color;
+    let color = theme.color;
 
     return (
       <div className="TodoAddContainer">
