@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { MyThemeContext } from '../../../context/ThemeManager';
 import { IThemes } from '../../../interfaces/Themes';
-import { TextareaAutosize } from '@material-ui/core';
 
 const useStyles = () =>
   makeStyles(theme => ({

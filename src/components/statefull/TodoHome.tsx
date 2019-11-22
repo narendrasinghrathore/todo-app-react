@@ -2,7 +2,6 @@ import { TodoListContainer } from '../stateless/TodoListContainer/TodoListContai
 import React, { Fragment, useState } from 'react';
 import { ITodoListItem } from '../../interfaces/TodoListItem';
 import { TodoAdd } from './TodoAdd/TodoAdd';
-import { ITodoHome } from '../../interfaces/TodoHome';
 
 export function TodoHome() {
   const initialData = [
