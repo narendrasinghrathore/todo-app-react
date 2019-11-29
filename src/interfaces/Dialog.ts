@@ -1,8 +1,10 @@
+import React from 'react';
 export interface IDialogProps {
-    title?: string;
-    message?: string;
-}
-
-export interface IDialogState {
-    isOpen: boolean;
+  open?: boolean;
+  selectedValue?: string;
+  onClose?: (value: string) => void;
+  children: React.Component;
+  title: string;
+  ariaLabel: string;
+  loading?: boolean;
 }

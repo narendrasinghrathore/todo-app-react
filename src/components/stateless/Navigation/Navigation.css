@@ -1,0 +1,12 @@
+.link{
+    text-decoration: none;
+    list-style: none;
+}
+.link > a {
+    color:grey;
+}
+.active{
+    color:black;
+    font-weight: bold;
+    text-decoration: none;
+}

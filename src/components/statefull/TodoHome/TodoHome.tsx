@@ -1,9 +1,9 @@
-import { TodoListContainer } from '../stateless/TodoListContainer/TodoListContainer';
+import { TodoListContainer } from '../../stateless/TodoListContainer/TodoListContainer';
 import React, { Fragment, useState } from 'react';
-import { ITodoListItem } from '../../interfaces/TodoListItem';
-import { TodoAdd } from './TodoAdd/TodoAdd';
+import { ITodoListItem } from '../../../interfaces/TodoListItem';
+import { TodoAdd } from '../TodoAdd/TodoAdd';
 
-export function TodoHome() {
+export default function TodoHome() {
   const initialData = [
     {
       id: 'b77d409a-10cd-4a47-8e94-b0cd0ab50aa1',
@@ -18,12 +18,16 @@ export function TodoHome() {
         'In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.'
     }
   ];
+
   const [state, setState] = useState(initialData);
 
   const onNewItem = (item: any) => {
     const list = [...state, item];
     setState(list);
   };
+
+  
+
   const onRemoveItem = (id: string) => {
     const list = state.filter((item: ITodoListItem) => item.id !== id);
     setState(list);
