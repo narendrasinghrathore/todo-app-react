@@ -8,7 +8,7 @@ import { RouteConfig } from '../../../utils/routes.util';
 
 const useStyles = makeStyles({
   root: {
-    width: '100vw'
+    
   }
 });
 
