@@ -15,13 +15,14 @@ export default function PrettoSliderComponent(props: SliderInterface) {
     <div className={props.root}>
       <Slider
         color={color}
+        marks
         defaultValue={defaultValue}
         getAriaValueText={valueText}
         aria-labelledby="page size slider"
         step={steps}
         min={min}
         max={max}
-        valueLabelDisplay="on"
+        valueLabelDisplay="auto"
         value={props.pageSize}
         onChangeCommitted={props.change}
         track="normal"

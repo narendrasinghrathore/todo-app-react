@@ -18,7 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "space-evenly",
-      margin: 10
+      margin: 7,
+      boxShadow: "0 0 8px 2px #dedede",
+      borderRadius: "2px"
     }
   })
 );
@@ -36,8 +38,7 @@ export default function ImageListPaging(props: any) {
       <MyThemeContext.Consumer>
         {value => (
           <Fragment>
-            {props.pageNumber}
-
+            Page: {props.pageNumber}
             <IconButton
               disabled={props.pageNumber === 1}
               onClick={props.pagePrevious}

@@ -6,7 +6,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     div: {
-      border: "1px solid #dedede"
+      boxShadow: "0 0 3px 2px #6e6c6c"
     }
   })
 );
@@ -24,7 +24,11 @@ export default function ImageLoader(props: ImageLoaderInterface) {
     <>
       <img
         src={props.src}
-        style={{ visibility: ImageLoadingSuccessful ? "visible" : "hidden" }}
+        style={{
+          display: ImageLoadingSuccessful ? "block" : "none",
+          width: "100%",
+          height: "100%"
+        }}
         onLoad={() => setImageLoadingSuccess(true)}
         alt={props.alt}
         onError={onImageLoadingError}
@@ -33,11 +37,7 @@ export default function ImageLoader(props: ImageLoaderInterface) {
         <>
           <div className={classes.div}>
             <Skeleton variant="circle" width={20} height={20} />
-          </div>
-          <div className={classes.div}>
             <Skeleton variant="rect" width={367} height={100} />
-          </div>
-          <div className={classes.div}>
             <Skeleton variant="text" width={200} height={20} />
           </div>
         </>
