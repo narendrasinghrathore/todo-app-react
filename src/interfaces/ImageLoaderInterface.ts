@@ -1,6 +1,6 @@
 export interface ImageLoaderInterface {
-  src: string;
-  alt: string | any;
-  width: any;
-  height: any;
+  src?: string;
+  alt?: string | any;
+  width?: any;
+  height?: any;
 }

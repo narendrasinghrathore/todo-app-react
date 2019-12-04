@@ -1,11 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
+import './TodoImageList.css';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import AxiosHttp from '../../../utils/http.util';
 import { ImageListItem_ } from '../../../interfaces/ImageListItem';
 import { SimpleDialog } from '../../stateless/Dialog/Dialog';
-import ImageGridList from '../../stateless/ImageGridList/ImageGridList';
-import ImageListPaging from '../../stateless/ImageListPaging/ImageListPaging';
-import ImageLoader from '../../../shared/ImageLoading';
+const ImageGridList = lazy(() =>
+  import('../../stateless/ImageGridList/ImageGridList')
+);
+const ImageListPaging = lazy(() =>
+  import('../../stateless/ImageListPaging/ImageListPaging')
+);
+const ImageLoader = lazy(() => import('../../../shared/ImageLoading'));
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -72,7 +77,7 @@ export default function TodoImageList() {
   // Get a specific image by adding /id/{image} to the start of the url.
   // https://picsum.photos/id/1020/367/267
   return (
-    <Fragment>
+    <Suspense fallback={<div className="loading">Loading ....</div>}>
       <SimpleDialog
         selectedValue={selectedValue}
         open={open}
@@ -94,6 +99,6 @@ export default function TodoImageList() {
         pageNext={pageNextEvent}
       />
       <ImageGridList list={list} classes={classes} openModal={openModal} />
-    </Fragment>
+    </Suspense>
   );
 }
