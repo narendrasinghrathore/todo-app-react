@@ -1,10 +1,1 @@
-
-const initialState = {
-
-};
-
-
-
-
-
-export default reducer;
+export * from './reducers';

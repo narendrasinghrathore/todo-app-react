@@ -1,28 +1,29 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
-import './TodoImageList.css';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import AxiosHttp from '../../../utils/http.util';
-import { ImageListItem_ } from '../../../interfaces/ImageListItem';
-import { SimpleDialog } from '../../stateless/Dialog/Dialog';
+import React, { useEffect, useState, lazy, Suspense } from "react";
+import "./TodoImageList.css";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import AxiosHttp from "../../../utils/http.util";
+import { ImageListItem_ } from "../../../interfaces/ImageListItem";
+import { SimpleDialog } from "../../stateless/Dialog/Dialog";
 const ImageGridList = lazy(() =>
-  import('../../stateless/ImageGridList/ImageGridList')
+  import("../../stateless/ImageGridList/ImageGridList")
 );
 const ImageListPaging = lazy(() =>
-  import('../../stateless/ImageListPaging/ImageListPaging')
+  import("../../stateless/ImageListPaging/ImageListPaging")
 );
-const ImageLoader = lazy(() => import('../../../shared/ImageLoading'));
+const ImageLoader = lazy(() => import("../../../shared/ImageLoading"));
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      height: "60vh",
+      overflow: "auto",
+      alignContent: "space-between",
       backgroundColor: theme.palette.background.paper
     },
-    gridList: {
-      width: '98vw',
-      height: '60vh'
+    gridItem: {
+     margin:'10px'
     }
   })
 );
@@ -36,7 +37,7 @@ export default function TodoImageList() {
 
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState<ImageListItem_>({
-    author: 'None'
+    author: "None"
   });
 
   const handleClose = () => {
@@ -47,7 +48,7 @@ export default function TodoImageList() {
     const http = new AxiosHttp();
     http
       .http({
-        method: 'GET',
+        method: "GET",
         url: `https://picsum.photos/v2/list?page=${pageNumber}&limit=${pageSizeLimit}`
       })
       .then(data => {
@@ -82,7 +83,7 @@ export default function TodoImageList() {
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
-        title={selectedValue['author']}
+        title={selectedValue["author"]}
       >
         <ImageLoader
           src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}

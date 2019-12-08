@@ -10,11 +10,6 @@ import AxiosHttp from "./utils/http.util";
 import NavigationComponent from "./components/stateless/Navigation/Navigation";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import RouterNavigation from "./utils/routes.util";
-import store from './store';
-/**
- * Store import
- */
-import { Provider } from "react-redux";
 
 export default class App extends React.Component<any, IAppState> {
   themeList: IThemes[] = [
@@ -43,29 +38,27 @@ export default class App extends React.Component<any, IAppState> {
 
   render() {
     return (
-      <Provider store={store}>
-        <ErrorBoundaryComponent>
-          <Fragment>
-            <MyThemeContext.Provider value={this.state.theme}>
-              <Router>
-                <div className="App">
-                  <header className="App-header">
-                    <Greet name={this.name} />
-                    <ThemeWidget
-                      themes={this.themeList}
-                      changeTheme={this.changeTheme}
-                    />
-                    <NavigationComponent />
-                  </header>
-                </div>
-                <Switch>
-                  <RouterNavigation />
-                </Switch>
-              </Router>
-            </MyThemeContext.Provider>
-          </Fragment>
-        </ErrorBoundaryComponent>
-      </Provider>
+      <ErrorBoundaryComponent>
+        <Fragment>
+          <MyThemeContext.Provider value={this.state.theme}>
+            <Router>
+              <div className="App">
+                <header className="App-header">
+                  <Greet name={this.name} />
+                  <ThemeWidget
+                    themes={this.themeList}
+                    changeTheme={this.changeTheme}
+                  />
+                  <NavigationComponent />
+                </header>
+              </div>
+              <Switch>
+                <RouterNavigation />
+              </Switch>
+            </Router>
+          </MyThemeContext.Provider>
+        </Fragment>
+      </ErrorBoundaryComponent>
     );
   }
 }
