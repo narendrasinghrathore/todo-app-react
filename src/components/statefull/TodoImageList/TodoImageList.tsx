@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper
     },
     gridItem: {
-     margin:'10px'
+      margin: "10px"
     }
   })
 );
@@ -46,15 +46,20 @@ export default function TodoImageList() {
 
   useEffect(() => {
     const http = new AxiosHttp();
-    http
-      .http({
+
+    return http.http(
+      {
         method: "GET",
         url: `https://picsum.photos/v2/list?page=${pageNumber}&limit=${pageSizeLimit}`
-      })
-      .then(data => {
+      },
+      (data: any) => {
         const { data: list } = data;
         setList(list);
-      });
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }, [pageSizeLimit, pageNumber]);
 
   const openModal = (item: ImageListItem_) => {

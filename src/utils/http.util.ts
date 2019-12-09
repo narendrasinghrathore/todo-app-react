@@ -3,11 +3,12 @@ import axios, {
   AxiosPromise,
   AxiosResponse,
   AxiosError
-} from 'axios';
+} from "axios";
 
-import Logger from './logger.util';
+import Logger from "./logger.util";
 
 const instance = axios.create();
+const CancelToken = axios.CancelToken;
 /**
  * Instance of axio, to remove the request interceptor if needed anytime.
  */
@@ -58,18 +59,29 @@ export default class AxiosHttp {
     instance.interceptors.response.eject(HttpResponseInterceptor);
   };
 
-  http = (config: AxiosRequestConfig): AxiosPromise<any> => {
-    return instance(config)
+  http = (
+    config: AxiosRequestConfig,
+    resolve: Function,
+    reject: Function
+  ): any => {
+    let cancelToken;
+    instance({
+      ...config,
+      cancelToken: new CancelToken(c => {
+        cancelToken = c;
+      })
+    })
       .then((data: any) => {
         Logger().add({
           requestUrl: config.url,
           method: config.method
         });
-        return data;
+        resolve(data);
       })
       .catch((err: any) => {
         Logger().add({ ...err });
-        return Promise.reject();
+        reject(err);
       });
+    return cancelToken;
   };
 }
