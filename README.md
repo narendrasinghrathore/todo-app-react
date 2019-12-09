@@ -7,8 +7,22 @@ Creating a basic todo application, screenshot below:
 <img src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Mobile%20device.PNG"/>
 
 
-We would try to use every api from react.org docs and integrate in our application based on scenario we face and trying to improve performance.
+This application is built using create-react-app.
+It will cover all possible scenarios, that are:
 
+ 1. Lazy loading routes
+ 2. Re-Usability of components
+ 3. Stateful and Stateless component architecture
+ 4. Http call using axios 
+ 5. Accessibility 
+ 6. Best practices
+ 7. Performance
+ 8. Suspense
+ 9. Redux
+ 10. Routing i.e. parameter and query based
+ 11. useState and useEffect
+ 12. function components
+ 
 
 ## Available Scripts
 
