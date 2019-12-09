@@ -6,7 +6,7 @@ import "./TodoListContainer.css";
 import List from "@material-ui/core/List";
 import { MyThemeContext } from "../../../context/ThemeManager";
 import { IThemes } from "../../../interfaces/Themes";
-export class TodoListContainer extends React.Component<ITodoList> {
+export default class TodoListContainer extends React.Component<ITodoList> {
   /**
    * The contextType property on a class can be assigned a Context object created by React.createContext().
    * This lets you consume the nearest current value of that Context type using this.context.
@@ -21,8 +21,8 @@ export class TodoListContainer extends React.Component<ITodoList> {
     if (len.length === 0) {
       list = <p className="no-item">No items in list</p>;
     } else {
-      list = this!.props!.list!
-        .map((item: ITodoListItem, index: number) => {
+      list = this!
+        .props!.list!.map((item: ITodoListItem, index: number) => {
           return (
             <TodoListItem
               key={item.id}

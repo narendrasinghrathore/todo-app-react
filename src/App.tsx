@@ -1,13 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, Suspense, lazy } from "react";
 import "./App.css";
-import Greet from "./components/stateless/Greet/Greet";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import RouterNavigation from "./utils/routes.util";
 import { MyThemeContext } from "./context/ThemeManager";
 import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
 import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
-import NavigationComponent from "./components/stateless/Navigation/Navigation";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-import RouterNavigation from "./utils/routes.util";
+/**
+ * Lazy loading components
+ */
+const Greet = lazy(() => import("./components/stateless/Greet/Greet"));
+const NavigationComponent = lazy(() =>
+  import("./components/stateless/Navigation/Navigation")
+);
+/**
+ * Routing configuration
+ */
+
 
 export default function App() {
   const themeList: IThemes[] = [
@@ -32,9 +41,11 @@ export default function App() {
           <Router>
             <div className="App">
               <header className="App-header">
-                <Greet name={name} />
-                <ThemeWidget themes={themeList} changeTheme={changeTheme} />
-                <NavigationComponent />
+                <Suspense fallback={<div>Loading ...</div>}>
+                  <Greet name={name} />
+                  <ThemeWidget themes={themeList} changeTheme={changeTheme} />
+                  <NavigationComponent />
+                </Suspense>
               </header>
             </div>
             <Switch>

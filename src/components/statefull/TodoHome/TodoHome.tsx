@@ -1,19 +1,29 @@
-import { TodoListContainer } from "../../stateless/TodoListContainer/TodoListContainer";
-import React, { Fragment } from "react";
+import React, { Fragment, Suspense, lazy } from "react";
 import { ITodoListItem } from "../../../interfaces/TodoListItem";
-import { TodoAdd } from "../TodoAdd/TodoAdd";
+
 import { connect } from "react-redux";
 import { AddTodo, DeleteTodo } from "../../../store/actions/todo.action";
+/**
+ * Lazy loading imports
+ */
+const TodoAdd = lazy(() => import("../TodoAdd/TodoAdd"));
+const TodoListContainer = lazy(() =>
+  import("../../stateless/TodoListContainer/TodoListContainer")
+);
 
 const TodoHome = (props: any) => {
   console.log(props);
   return (
     <Fragment>
-      <TodoAdd handleAddNewItem={(item: ITodoListItem) => props.add(item)} />
-      <TodoListContainer
-        onRemoveItem={(id: string) => props.remove(id)}
-        list={props.list}
-      />
+      <Suspense fallback={<div>Loading ...</div>}>
+        <TodoAdd handleAddNewItem={(item: ITodoListItem) => props.add(item)} />
+      </Suspense>
+      <Suspense fallback={<div>Loading ...</div>}>
+        <TodoListContainer
+          onRemoveItem={(id: string) => props.remove(id)}
+          list={props.list}
+        />
+      </Suspense>
     </Fragment>
   );
 };

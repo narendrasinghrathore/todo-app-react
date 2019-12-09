@@ -1,19 +1,19 @@
-import React, { Fragment } from 'react';
-import './TodoAdd.css';
-import { ITodoListItem, ITodoAdd } from '../../../interfaces/TodoListItem';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import { MyThemeContext } from '../../../context/ThemeManager';
-import { IThemes } from '../../../interfaces/Themes';
+import React, { Fragment } from "react";
+import "./TodoAdd.css";
+import { ITodoListItem, ITodoAdd } from "../../../interfaces/TodoListItem";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import { MyThemeContext } from "../../../context/ThemeManager";
+import { IThemes } from "../../../interfaces/Themes";
 
 const useStyles = () =>
   makeStyles(theme => ({
     container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      flexDirection: 'column'
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "column"
     },
     fab: {
       margin: theme.spacing(3)
@@ -27,7 +27,7 @@ const useStyles = () =>
       width: 200
     }
   }));
-export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
+export default class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
   /**
    * The contextType property on a class can be assigned a Context object created by React.createContext().
    * This lets you consume the nearest current value of that Context type using this.context.
@@ -42,9 +42,9 @@ export class TodoAdd extends React.Component<ITodoAdd, ITodoListItem> {
   constructor(props: any) {
     super(props);
     this.state = {
-      content: '',
-      name: '',
-      id: ''
+      content: "",
+      name: "",
+      id: ""
     };
 
     this.disableAddButton = this.disableAddButton.bind(this);
