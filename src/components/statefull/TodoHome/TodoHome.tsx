@@ -3,7 +3,6 @@ import React, { Fragment } from "react";
 import { ITodoListItem } from "../../../interfaces/TodoListItem";
 import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { connect } from "react-redux";
-import { TodoAppState } from "../../../store/reducers/todo.reducer";
 import { AddTodo, DeleteTodo } from "../../../store/actions/todo.action";
 
 const TodoHome = (props: any) => {
