@@ -1,5 +1,5 @@
 import { TodoListContainer } from "../../stateless/TodoListContainer/TodoListContainer";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { ITodoListItem } from "../../../interfaces/TodoListItem";
 import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { connect } from "react-redux";
@@ -7,52 +7,21 @@ import { TodoAppState } from "../../../store/reducers/todo.reducer";
 import { AddTodo, DeleteTodo } from "../../../store/actions/todo.action";
 
 const TodoHome = (props: any) => {
-  const initialData = [
-    {
-      id: "b77d409a-10cd-4a47-8e94-b0cd0ab50aa1",
-      name: "Code-Splitting",
-      content:
-        "Most React apps will have their files “bundled” using tools like Webpack, Rollup or Browserify. Bundling is the process of following imported files and merging them into a single file: a “bundle”. This bundle can then be included on a webpage to load an entire app at once."
-    },
-    {
-      id: "b77d409a-10cd-4a47-8e94-b0cd0ab50aa2",
-      name: "Context",
-      content:
-        "In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree."
-    }
-  ];
-
-  const [state, setState] = useState(initialData);
-
-  const onNewItem = (item: any) => {
-    const list = [...state, item];
-    props.AddTodo({})
-    setState(list);
-  };
-
-  const onRemoveItem = (id: string) => {
-    const list = state.filter((item: ITodoListItem) => item.id !== id);
-    setState(list);
-  };
-
+  console.log(props);
   return (
     <Fragment>
-      <TodoAdd handleAddNewItem={(item: ITodoListItem) => onNewItem(item)} />
+      <TodoAdd handleAddNewItem={(item: ITodoListItem) => props.add(item)} />
       <TodoListContainer
-        onRemoveItem={(id: string) => onRemoveItem(id)}
+        onRemoveItem={(id: string) => props.remove(id)}
         list={props.list}
       />
     </Fragment>
   );
 };
 
-const mapStateToProps = (state: TodoAppState) => {
-  return {
-    list: state.list
-  };
-};
-const mapDispatchToProps = {
-   AddTodo,
-   DeleteTodo
-};
+const mapStateToProps = (state: any) => ({ list: state.list });
+const mapDispatchToProps = (dispatch: any) => ({
+  add: (item: ITodoListItem) => dispatch(AddTodo(item)),
+  remove: (id: string) => dispatch(DeleteTodo(id))
+});
 export default connect(mapStateToProps, mapDispatchToProps)(TodoHome);

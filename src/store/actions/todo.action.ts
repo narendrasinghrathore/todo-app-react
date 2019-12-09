@@ -1,21 +1,16 @@
 import { ITodoListItem } from "../../interfaces/TodoListItem";
-import { StoreActions } from "../../interfaces/Actions";
 
 export const ACTION_NAME = "[TODO]: ";
 
 export const ADD_TODO = `${ACTION_NAME} ADD_TODO`;
 export const DELETE_TODO = `${ACTION_NAME} DELETE_TODO`;
 
+export const AddTodo = (item: ITodoListItem) => ({
+  type: ADD_TODO,
+  item
+});
 
-export class AddTodo implements StoreActions {
-    readonly type = ADD_TODO;
-    constructor(public payload: ITodoListItem) { }
-}
-
-
-export class DeleteTodo implements StoreActions {
-    readonly type = DELETE_TODO;
-    constructor(public payload: number) { }
-}
-
-export type TodoActions = AddTodo | DeleteTodo;
+export const DeleteTodo = (id: string) => ({
+  type: DELETE_TODO,
+  id
+});

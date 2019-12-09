@@ -46,6 +46,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^2.3.0"
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "redux-devtools-extension": "^2.13.8"
   }
 }
