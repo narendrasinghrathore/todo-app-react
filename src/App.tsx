@@ -6,7 +6,7 @@ import { MyThemeContext } from "./context/ThemeManager";
 import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
 import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
-import NavDrawer from "./shared/Drawer/Drawer";
+import NavDrawer from "./shared/Drawer/NavDrawer";
 /**
  * Routing configuration
  */
