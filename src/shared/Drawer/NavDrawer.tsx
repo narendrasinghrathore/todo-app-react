@@ -1,5 +1,4 @@
 import React, { lazy } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -25,18 +24,9 @@ import SuspenseContainer from "../Loader/Loader";
 const Greet = lazy(() => import("../../components/stateless/Greet/Greet"));
 
 type DrawerSide = "top" | "left" | "bottom" | "right";
-const useStyles = makeStyles({
-  list: {
-    width: 250
-  },
-  drawer: {
-    padding: 10
-  }
-});
 
 export default function NavDrawer() {
   const name = "Narendra";
-  const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -59,7 +49,7 @@ export default function NavDrawer() {
   };
   const sideList = (side: DrawerSide) => (
     <div
-      className={classes.list}
+      style={{ width: 250 }}
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
@@ -70,16 +60,14 @@ export default function NavDrawer() {
       <List>
         {RouteConfig.map((item, index) => {
           return (
-            <>
-              <ListItem
-                onClick={() => history.push(item.path)}
-                button
-                key={index}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.label} />
-              </ListItem>
-            </>
+            <ListItem
+              onClick={() => history.push(item.path)}
+              button
+              key={index}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.label} />
+            </ListItem>
           );
         })}
       </List>
@@ -87,7 +75,7 @@ export default function NavDrawer() {
   );
 
   return (
-    <div className={classes.drawer}>
+    <div style={{ padding: 10 }}>
       <IconButton onClick={toggleDrawer("left", true)}>
         {state["left"] ? <MenuOpenIcon /> : <MenuIcon />}
       </IconButton>

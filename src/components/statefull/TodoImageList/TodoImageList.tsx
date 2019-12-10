@@ -1,6 +1,5 @@
 import React, { useEffect, useState, lazy } from "react";
 import "./TodoImageList.css";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import AxiosHttp from "../../../utils/http.util";
 import { ImageListItem_ } from "../../../interfaces/ImageListItem";
 import { SimpleDialog } from "../../stateless/Dialog/Dialog";
@@ -16,27 +15,20 @@ const ImageListPaging = lazy(() =>
 );
 const ImageLoader = lazy(() => import("../../../shared/ImageLoading"));
 
-/**
- * Creating styles
- */
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+export default function TodoImageList() {
+  const imageGridStyletyle = {
     root: {
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "center",
       height: "60vh",
       overflow: "auto",
-      alignContent: "space-between",
-      backgroundColor: theme.palette.background.paper
+      alignContent: "space-between"
     },
     gridItem: {
-      margin: "10px"
+      padding: 10
     }
-  })
-);
-export default function TodoImageList() {
-  const classes = useStyles();
+  };
   let [list, setList] = useState([]);
 
   let [pageSizeLimit, setPageSizeLimit] = useState(10);
@@ -117,7 +109,11 @@ export default function TodoImageList() {
         />
       </SuspenseContainer>
       <SuspenseContainer>
-        <ImageGridList list={list} classes={classes} openModal={openModal} />
+        <ImageGridList
+          list={list}
+          classes={imageGridStyletyle}
+          openModal={openModal}
+        />
       </SuspenseContainer>
     </>
   );

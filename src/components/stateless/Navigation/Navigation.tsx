@@ -1,17 +1,11 @@
 import React, { Fragment } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import { useHistory } from "react-router-dom";
 import "./Navigation.css";
 import { RouteConfig } from "../../../utils/routes.util";
 
-const useStyles = makeStyles({
-  root: {}
-});
-
 export default function NavigationComponent() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const history = useHistory();
   return (
@@ -23,7 +17,6 @@ export default function NavigationComponent() {
           history.push(newValue);
         }}
         showLabels
-        className={classes.root}
       >
         {RouteConfig.map((route, index) => (
           <BottomNavigationAction

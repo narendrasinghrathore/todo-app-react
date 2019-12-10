@@ -3,10 +3,10 @@ import { ImageListItem_ } from "../../../interfaces/ImageListItem";
 import ImageLoader from "../../../shared/ImageLoading";
 export default function ImageGridList(props: any) {
   return (
-    <div className={props.classes.root}>
+    <div style={props.classes.root}>
       {props.list.map((tile: ImageListItem_) => (
         <div
-          className={props.classes.gridItem}
+          style={props.classes.gridItem}
           key={tile.id}
           onClick={() => props.openModal(tile)}
         >
