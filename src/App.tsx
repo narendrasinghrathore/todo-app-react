@@ -1,4 +1,4 @@
-import React, { Fragment, useState, Suspense, lazy } from "react";
+import React, { Fragment, useState, Suspense } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import RouterNavigation from "./utils/routes.util";
@@ -7,13 +7,6 @@ import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
 import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 import NavDrawer from "./shared/Drawer/Drawer";
-/**
- * Lazy loading components
- */
-
-const NavigationComponent = lazy(() =>
-  import("./components/stateless/Navigation/Navigation")
-);
 /**
  * Routing configuration
  */
@@ -32,8 +25,6 @@ export default function App() {
     }
   };
 
-  
-
   return (
     <ErrorBoundaryComponent>
       <Fragment>
@@ -43,9 +34,7 @@ export default function App() {
             <div className="App">
               <header className="App-header">
                 <Suspense fallback={<div>Loading ...</div>}>
-                  
                   <ThemeWidget themes={themeList} changeTheme={changeTheme} />
-                 
                 </Suspense>
               </header>
             </div>
