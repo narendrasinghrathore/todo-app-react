@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -18,6 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
  */
 import { RouteConfig } from "../../utils/routes.util";
 import { useHistory } from "react-router-dom";
+import SuspenseContainer from "../Loader/Loader";
 /**
  * Lazy loading imports
  */
@@ -63,9 +64,9 @@ export default function NavDrawer() {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <Suspense fallback={<div>Loading...</div>}>
+      <SuspenseContainer>
         <Greet name={name} />
-      </Suspense>
+      </SuspenseContainer>
       <List>
         {RouteConfig.map((item, index) => {
           return (

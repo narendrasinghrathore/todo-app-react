@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-evenly",
       margin: 7,
-     
       borderRadius: "2px"
     }
   })

@@ -1,15 +1,13 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import { useHistory } from 'react-router-dom';
-import './Navigation.css';
-import { RouteConfig } from '../../../utils/routes.util';
+import React, { Fragment } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import { useHistory } from "react-router-dom";
+import "./Navigation.css";
+import { RouteConfig } from "../../../utils/routes.util";
 
 const useStyles = makeStyles({
-  root: {
-    
-  }
+  root: {}
 });
 
 export default function NavigationComponent() {
@@ -28,7 +26,8 @@ export default function NavigationComponent() {
         className={classes.root}
       >
         {RouteConfig.map((route, index) => (
-          <BottomNavigationAction key={index}
+          <BottomNavigationAction
+            key={index}
             icon={route.icon}
             value={route.path}
             label={route.label}

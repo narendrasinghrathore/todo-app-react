@@ -1,4 +1,4 @@
-import React, { Fragment, useState, Suspense } from "react";
+import React, { Fragment, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import RouterNavigation from "./utils/routes.util";
@@ -7,6 +7,7 @@ import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
 import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 import NavDrawer from "./shared/Drawer/NavDrawer";
+import SuspenseContainer from "./shared/Loader/Loader";
 /**
  * Routing configuration
  */
@@ -33,9 +34,9 @@ export default function App() {
             <NavDrawer />
             <div className="App">
               <header className="App-header">
-                <Suspense fallback={<div>Loading ...</div>}>
+                <SuspenseContainer>
                   <ThemeWidget themes={themeList} changeTheme={changeTheme} />
-                </Suspense>
+                </SuspenseContainer>
               </header>
             </div>
             <Switch>

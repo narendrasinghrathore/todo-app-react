@@ -1,9 +1,10 @@
-import React, { Fragment, Suspense, lazy } from "react";
+import React, { Fragment, lazy } from "react";
 import { ITodoListItem } from "../../../interfaces/TodoListItem";
 
 import { connect } from "react-redux";
 import { AddTodo, DeleteTodo } from "../../../store/actions/todo.action";
 import { IState } from "../../../interfaces/State";
+import SuspenseContainer from "../../../shared/Loader/Loader";
 /**
  * Lazy loading imports
  */
@@ -15,15 +16,15 @@ const TodoListContainer = lazy(() =>
 const TodoHome = (props: any) => {
   return (
     <Fragment>
-      <Suspense fallback={<div>Loading ...</div>}>
+      <SuspenseContainer>
         <TodoAdd handleAddNewItem={(item: ITodoListItem) => props.add(item)} />
-      </Suspense>
-      <Suspense fallback={<div>Loading ...</div>}>
+      </SuspenseContainer>
+      <SuspenseContainer>
         <TodoListContainer
           onRemoveItem={(id: string) => props.remove(id)}
           list={props.list}
         />
-      </Suspense>
+      </SuspenseContainer>
     </Fragment>
   );
 };

@@ -1,9 +1,13 @@
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import "./TodoImageList.css";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import AxiosHttp from "../../../utils/http.util";
 import { ImageListItem_ } from "../../../interfaces/ImageListItem";
 import { SimpleDialog } from "../../stateless/Dialog/Dialog";
+import SuspenseContainer from "../../../shared/Loader/Loader";
+/**
+ * Lazy loading components
+ */
 const ImageGridList = lazy(() =>
   import("../../stateless/ImageGridList/ImageGridList")
 );
@@ -11,6 +15,10 @@ const ImageListPaging = lazy(() =>
   import("../../stateless/ImageListPaging/ImageListPaging")
 );
 const ImageLoader = lazy(() => import("../../../shared/ImageLoading"));
+
+/**
+ * Creating styles
+ */
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -83,28 +91,34 @@ export default function TodoImageList() {
   // Get a specific image by adding /id/{image} to the start of the url.
   // https://picsum.photos/id/1020/367/267
   return (
-    <Suspense fallback={<div className="loading">Loading ....</div>}>
+    <>
       <SimpleDialog
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
         title={selectedValue["author"]}
       >
-        <ImageLoader
-          src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
-          alt={selectedValue.author}
-          width={1280}
-          height={720}
-        />
+        <SuspenseContainer>
+          <ImageLoader
+            src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
+            alt={selectedValue.author}
+            width={1280}
+            height={720}
+          />
+        </SuspenseContainer>
       </SimpleDialog>
-      <ImageListPaging
-        pageNumber={pageNumber}
-        pageLimit={pageSizeLimit}
-        updatePageSize={updatePageSize}
-        pagePrevious={pagePreviousEvent}
-        pageNext={pageNextEvent}
-      />
-      <ImageGridList list={list} classes={classes} openModal={openModal} />
-    </Suspense>
+      <SuspenseContainer>
+        <ImageListPaging
+          pageNumber={pageNumber}
+          pageLimit={pageSizeLimit}
+          updatePageSize={updatePageSize}
+          pagePrevious={pagePreviousEvent}
+          pageNext={pageNextEvent}
+        />
+      </SuspenseContainer>
+      <SuspenseContainer>
+        <ImageGridList list={list} classes={classes} openModal={openModal} />
+      </SuspenseContainer>
+    </>
   );
 }
