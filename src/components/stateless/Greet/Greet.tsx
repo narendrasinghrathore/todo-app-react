@@ -7,6 +7,8 @@ import Logo from "../Logo/Logo";
 // logos
 import logoNight from "../../../assets/night.svg";
 import logoNoon from "../../../assets/noon.svg";
+// css
+import './Greet.css';
 
 export default class Greet extends React.Component<IGreet> {
   message: string;
@@ -38,7 +40,7 @@ export default class Greet extends React.Component<IGreet> {
 
   render() {
     return (
-      <div>
+      <div className="container">
         {this.logo}
         <h1>Hello there{this.message}</h1>
       </div>

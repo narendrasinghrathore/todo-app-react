@@ -6,17 +6,17 @@ import { MyThemeContext } from "./context/ThemeManager";
 import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
 import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
+import NavDrawer from "./shared/Drawer/Drawer";
 /**
  * Lazy loading components
  */
-const Greet = lazy(() => import("./components/stateless/Greet/Greet"));
+
 const NavigationComponent = lazy(() =>
   import("./components/stateless/Navigation/Navigation")
 );
 /**
  * Routing configuration
  */
-
 
 export default function App() {
   const themeList: IThemes[] = [
@@ -32,19 +32,20 @@ export default function App() {
     }
   };
 
-  const name = "Narendra";
+  
 
   return (
     <ErrorBoundaryComponent>
       <Fragment>
         <MyThemeContext.Provider value={theme}>
           <Router>
+            <NavDrawer />
             <div className="App">
               <header className="App-header">
                 <Suspense fallback={<div>Loading ...</div>}>
-                  <Greet name={name} />
+                  
                   <ThemeWidget themes={themeList} changeTheme={changeTheme} />
-                  <NavigationComponent />
+                 
                 </Suspense>
               </header>
             </div>
