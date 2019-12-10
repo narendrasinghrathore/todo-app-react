@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
-import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
 /**
  * Routing imports
  */
@@ -87,9 +87,9 @@ export default function NavDrawer() {
 
   return (
     <div className={classes.drawer}>
-      <Icon onClick={toggleDrawer("left", true)}>
+      <IconButton onClick={toggleDrawer("left", true)}>
         {state["left"] ? <MenuOpenIcon /> : <MenuIcon />}
-      </Icon>
+      </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
         {sideList("left")}
       </Drawer>

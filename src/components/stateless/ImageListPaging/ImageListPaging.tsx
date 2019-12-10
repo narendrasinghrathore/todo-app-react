@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-evenly",
       margin: 7,
-      boxShadow: "0 0 8px 2px #dedede",
+     
       borderRadius: "2px"
     }
   })
