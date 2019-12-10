@@ -26,21 +26,22 @@ const intialState: TodoAppState = {
 const todos = (state = intialState, action: any) => {
   switch (action.type) {
     case ADD_TODO: {
-      const list = state.list;
+      const list = [...state.list];
       list.push(action.item as ITodoListItem);
       return { ...state, list };
     }
 
     case DELETE_TODO: {
-      const list = state.list;
+      const list = [...state.list];
       const filteredList = list.filter(
         (item: ITodoListItem) => item.id !== (action.id as string)
       );
       return { ...state, list: filteredList };
     }
 
-    default:
+    default: {
       return state;
+    }
   }
 };
 export default todos;
