@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useContext } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -18,6 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { RouteConfig } from "../../utils/routes.util";
 import { useHistory } from "react-router-dom";
 import SuspenseContainer from "../Loader/Loader";
+import { MyThemeContext } from "../../context/ThemeManager";
 /**
  * Lazy loading imports
  */
@@ -26,6 +27,8 @@ const Greet = lazy(() => import("../../components/stateless/Greet/Greet"));
 type DrawerSide = "top" | "left" | "bottom" | "right";
 
 export default function NavDrawer() {
+  const context = useContext(MyThemeContext);
+  const { color }: any = context;
   const name = "Narendra";
   const [state, setState] = React.useState({
     top: false,
@@ -76,7 +79,7 @@ export default function NavDrawer() {
 
   return (
     <div style={{ padding: 10 }}>
-      <IconButton onClick={toggleDrawer("left", true)}>
+      <IconButton onClick={toggleDrawer("left", true)} color={color}>
         {state["left"] ? <MenuOpenIcon /> : <MenuIcon />}
       </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
