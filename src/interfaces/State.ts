@@ -1,7 +1,5 @@
-import { ITodoListItem } from "./TodoListItem";
+import { TodoAppState } from "../store/reducers/todo.reducer";
 
 export interface IState {
-  todos: {
-    list: ITodoListItem[];
-  };
+  todos: TodoAppState;
 }

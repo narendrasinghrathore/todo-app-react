@@ -36,6 +36,9 @@ export default function NavDrawer() {
     bottom: false,
     right: false
   });
+  /**
+   * For navigation i.e router api
+   */
   const history = useHistory();
   const toggleDrawer = (side: DrawerSide, open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -64,7 +67,7 @@ export default function NavDrawer() {
         {RouteConfig.map((item, index) => {
           return (
             <ListItem
-              onClick={() => history.push(item.path)}
+              onClick={() => history.push(item.goto)}
               button
               key={index}
             >

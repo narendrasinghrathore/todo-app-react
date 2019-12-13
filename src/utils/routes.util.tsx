@@ -6,17 +6,20 @@ import HomeIcon from "@material-ui/icons/Home";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import SuspenseContainer from "../shared/Loader/Loader";
+import { IRouteConfig } from "../interfaces/routeconfig.";
 const TodoAdd = lazy(() => import("../components/stateless/TodoAdd/TodoAdd"));
-export const RouteConfig = [
+export const RouteConfig: IRouteConfig[] = [
   {
     path: "/",
     component: <TodoHome />,
     value: "home",
     label: "Home",
-    icon: <HomeIcon />
+    icon: <HomeIcon />,
+    goto: "/"
   },
   {
-    path: "/add",
+    goto: "/add",
+    path: "/add/:id?", // Optional parameter are postfix by ? and should be placed at end
     component: (
       <SuspenseContainer>
         <TodoAdd />
@@ -26,12 +29,14 @@ export const RouteConfig = [
     label: "Add new todo",
     icon: <PostAddIcon />
   },
+
   {
     path: "/images",
     component: <TodoImageList />,
     icon: <PermMediaIcon />,
     label: "Images",
-    value: "Browse images"
+    value: "Browse images",
+    goto: "/images"
   }
 ];
 export default function RouterNavigation(props: any) {

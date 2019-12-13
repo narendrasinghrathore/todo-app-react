@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import "./TodoAdd.css";
 import { ITodoListItem } from "../../../interfaces/TodoListItem";
 import Fab from "@material-ui/core/Fab";
@@ -7,7 +7,17 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyThemeContext } from "../../../context/ThemeManager";
 import { connect } from "react-redux";
-import { AddTodo } from "../../../store/actions/todo.action";
+import {
+  AddTodo,
+  GetSelectedTodo,
+  RemoveSelectedTodo
+} from "../../../store/actions/todo.action";
+import { useParams, useHistory } from "react-router-dom";
+import { IState } from "../../../interfaces/State";
+import { getSelectedTodoState } from "../../../store/selectors/todo.selector";
+import Typography from "@material-ui/core/Typography";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
 
 const useStyles = () =>
   makeStyles(theme => ({
@@ -38,15 +48,35 @@ const TodoAdd = (props: any) => {
 
   const classes: any = useStyles();
 
-  const theme = context;
-  const color : any = theme.color;
+  // We can use the `useParams` hook here to access
+  // the dynamic pieces of the URL.
+  let { id } = useParams();
 
-  const initialState: ITodoListItem = {
+  const theme = context;
+  const color: any = theme.color;
+
+  /**
+   * For navigation i.e router api
+   */
+  const history = useHistory();
+
+  let initialState: ITodoListItem | any = {
     name: "",
     content: ""
   };
 
-  const [state, setState] = useState<ITodoListItem>(initialState);
+  const [state, setState] = useState<ITodoListItem | any>(initialState);
+
+  useEffect(() => {
+    if (id) {
+      props.getSelectedTodo(id);
+      // On page reload check if selected todo is not undefined
+      if (props.selectedTodo) setState(props.selectedTodo);
+      return () => {
+        props.removeSelected();
+      };
+    }
+  },[id, props]);
 
   const disableAddButton = () => {
     if (state.name && state.content) {
@@ -80,6 +110,12 @@ const TodoAdd = (props: any) => {
 
   return (
     <div className="TodoAddContainer">
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link color={color} onClick={() => history.push("/")}>
+          Home
+        </Link>
+        <Typography color="textPrimary">Todo</Typography>
+      </Breadcrumbs>
       <Fragment>
         <TextField
           color={color}
@@ -122,9 +158,13 @@ const TodoAdd = (props: any) => {
     </div>
   );
 };
-
+const mapStateToProps = (state: IState) => ({
+  selectedTodo: getSelectedTodoState(state)
+});
 const mapDispatchoProps = (dispatch: any) => ({
-  add: (item: ITodoListItem) => dispatch(AddTodo(item))
+  add: (item: ITodoListItem) => dispatch(AddTodo(item)),
+  getSelectedTodo: (id: string) => dispatch(GetSelectedTodo(id)),
+  removeSelected: () => dispatch(RemoveSelectedTodo())
 });
 
-export default connect(null, mapDispatchoProps)(TodoAdd);
+export default connect(mapStateToProps, mapDispatchoProps)(TodoAdd);
