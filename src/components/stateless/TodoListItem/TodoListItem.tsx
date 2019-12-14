@@ -12,18 +12,29 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 /**
- * 
+ *
  * Navigation
  */
 import { useHistory } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { GetSelectedTodo } from "../../../store/actions/todo.action";
 
 export function TodoListItem(props: any) {
   const config = useSpring({ opacity: 1, from: { opacity: 0 } });
   const history = useHistory();
+  /**
+   * This hook returns a reference to the dispatch function from the Redux store. You may use it to dispatch actions as needed.
+   */
+  const dispatch = useDispatch();
   const name = props.name;
   const content = props.content;
   const color = props.color;
+
+  const editTodo = (id: string): void => {
+    dispatch(GetSelectedTodo(id));
+    history.push(`/add/${props.id}`);
+  };
+
   return (
     <animated.div style={config}>
       <ListItem>
@@ -33,7 +44,7 @@ export function TodoListItem(props: any) {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          style={{ padding: '0 25px 0 0' }}
+          style={{ padding: "0 25px 0 0" }}
           aria-label={name}
           color={color}
           primary={name}
@@ -41,7 +52,7 @@ export function TodoListItem(props: any) {
         />
         <ListItemSecondaryAction>
           <IconButton
-            onClick={() => history.push(`/add/${props.id}`)}
+            onClick={() => editTodo(props.id)}
             edge="end"
             aria-label={"delete " + name}
           >

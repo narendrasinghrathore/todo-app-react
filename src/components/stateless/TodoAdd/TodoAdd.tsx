@@ -6,11 +6,11 @@ import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyThemeContext } from "../../../context/ThemeManager";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
   AddTodo,
-  GetSelectedTodo,
-  RemoveSelectedTodo
+  RemoveSelectedTodo,
+  GetSelectedTodo
 } from "../../../store/actions/todo.action";
 import { useParams, useHistory } from "react-router-dom";
 import { IState } from "../../../interfaces/State";
@@ -51,6 +51,12 @@ const TodoAdd = (props: any) => {
   // We can use the `useParams` hook here to access
   // the dynamic pieces of the URL.
   let { id } = useParams();
+  // disptach action
+  const dispatch = useDispatch();
+
+  const selectedTodo = useSelector((state: IState) =>
+    getSelectedTodoState(state)
+  );
 
   const theme = context;
   const color: any = theme.color;
@@ -67,16 +73,26 @@ const TodoAdd = (props: any) => {
 
   const [state, setState] = useState<ITodoListItem | any>(initialState);
 
+  // Adding sipatch action in other useEffect result in useEffect  call twice
+  // so it's better to separate the logic.
   useEffect(() => {
     if (id) {
-      props.getSelectedTodo(id);
-      // On page reload check if selected todo is not undefined
-      if (props.selectedTodo) setState(props.selectedTodo);
-      return () => {
-        props.removeSelected();
-      };
+      if (selectedTodo === undefined) {
+        dispatch(GetSelectedTodo(id));
+      }
     }
-  },[id, props]);
+  }, [id, selectedTodo, dispatch]);
+
+  useEffect(() => {
+    if (selectedTodo) setState(selectedTodo);
+  }, [selectedTodo]);
+
+  // Remove selected if any on component unmount
+  useEffect(() => {
+    return () => {
+      dispatch(RemoveSelectedTodo());
+    };
+  }, [dispatch]);
 
   const disableAddButton = () => {
     if (state.name && state.content) {
@@ -158,13 +174,8 @@ const TodoAdd = (props: any) => {
     </div>
   );
 };
-const mapStateToProps = (state: IState) => ({
-  selectedTodo: getSelectedTodoState(state)
-});
 const mapDispatchoProps = (dispatch: any) => ({
-  add: (item: ITodoListItem) => dispatch(AddTodo(item)),
-  getSelectedTodo: (id: string) => dispatch(GetSelectedTodo(id)),
-  removeSelected: () => dispatch(RemoveSelectedTodo())
+  add: (item: ITodoListItem) => dispatch(AddTodo(item))
 });
 
-export default connect(mapStateToProps, mapDispatchoProps)(TodoAdd);
+export default connect(null, mapDispatchoProps)(TodoAdd);
