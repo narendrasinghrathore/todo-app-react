@@ -7,6 +7,8 @@ import PermMediaIcon from "@material-ui/icons/PermMedia";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import SuspenseContainer from "../shared/Loader/Loader";
 import { IRouteConfig } from "../interfaces/routeconfig.";
+import Login from "../components/stateless/Login/Login";
+import LockIcon from "@material-ui/icons/Lock";
 const TodoAdd = lazy(() => import("../components/stateless/TodoAdd/TodoAdd"));
 export const RouteConfig: IRouteConfig[] = [
   {
@@ -37,6 +39,18 @@ export const RouteConfig: IRouteConfig[] = [
     label: "Images",
     value: "Browse images",
     goto: "/images"
+  },
+  {
+    path: "/login",
+    component: (
+      <SuspenseContainer>
+        <Login />
+      </SuspenseContainer>
+    ),
+    icon: <LockIcon />,
+    label: "Login",
+    value: "login",
+    goto: "/login"
   }
 ];
 export default function RouterNavigation(props: any) {
