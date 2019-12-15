@@ -21,12 +21,12 @@ export default function TodoImageList() {
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "center",
-      height: "60vh",
+      height: "80vh",
       overflow: "auto",
-      alignContent: "space-between"
+      alignContent: " flex-start"
     },
     gridItem: {
-      padding: 10
+      padding: 2
     }
   };
   let [list, setList] = useState([]);

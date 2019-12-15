@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./Login.css";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import { Theme, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -10,29 +10,37 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import Fab from "@material-ui/core/Fab";
 import { MyThemeContext } from "../../../context/ThemeManager";
-//#FE6B8B
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      padding: theme.spacing(3, 10),
-      margin: "2vw",
-      backgroundColor: `linear-gradient(45deg,  #FE6B8B F 30%, #FF8E53 90%)`,
-      display: "flex",
-      justifyContent: "center",
-      alignContent: "center",
-      flexDirection: "column",
-      backgroundPosition: "center",
-      primary: theme.palette.primary.main,
-      secondary: theme.palette.secondary.main
-    },
-    margin: {
-      margin: theme.spacing(5, 0)
-    }
-  })
-);
+
+const useStyles = makeStyles((theme: Theme | any) => ({
+  root: (props: any) => ({
+    padding: theme.spacing(3, 10),
+    margin: "2vw",
+    background: `linear-gradient(45deg, ${props.background(
+      theme
+    )}  30%, #FF8E53 90%)`,
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    flexDirection: "column"
+  }),
+  margin: {
+    margin: theme.spacing(5, 0)
+  }
+}));
 export default function Login() {
-  const classes = useStyles();
   const color: any = useContext(MyThemeContext).color;
+  /**
+   * Let to set background color based on theme selection color selection
+   * i.e primary or secondary
+   * @see https://material-ui.com/styles/basics/#adapting-based-on-props
+   * @param theme Get theme current instance
+   */
+  const background = (theme: Theme) => {
+    return color === "primary"
+      ? theme.palette.secondary.main
+      : theme.palette.primary.main;
+  };
+  const classes = useStyles({ background });
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h3">

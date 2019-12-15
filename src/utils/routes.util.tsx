@@ -7,9 +7,15 @@ import PermMediaIcon from "@material-ui/icons/PermMedia";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import SuspenseContainer from "../shared/Loader/Loader";
 import { IRouteConfig } from "../interfaces/routeconfig.";
-import Login from "../components/stateless/Login/Login";
 import LockIcon from "@material-ui/icons/Lock";
+
+/**
+ * Lazy loading routes
+ */
+const Login = lazy(() => import("../components/stateless/Login/Login"));
+
 const TodoAdd = lazy(() => import("../components/stateless/TodoAdd/TodoAdd"));
+
 export const RouteConfig: IRouteConfig[] = [
   {
     path: "/",
