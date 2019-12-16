@@ -7,6 +7,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import { IMusicItem } from "../../../interfaces/MusicItem";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import AlbumIcon from "@material-ui/icons/Album";
+import styled from "styled-components";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -19,28 +21,42 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
 export default function TodoMusicList({ list }: any) {
   const classes = useStyles();
   const audio = new Audio();
 
-  const [buffer, setBuffer] = useState(false);
+  // const [buffer, setBuffer] = useState(false);
+  const [playingItem, setPlayingItem] = useState<IMusicItem>();
+  const [playing, setPlaying] = useState(false);
 
   audio.onwaiting = () => {
-      console.log('buffering..');
-  }
+    console.log("buffering..");
+  };
 
   audio.oncanplay = () => {
-      console.log('Progress ..');
-  }
-  const play = (url: string) => {
-    audio.src = url;
-    console.log(audio.oncanplay);
-    audio.play();
+    console.log("Progress ..");
   };
 
-  const pause = (url: string) => {
-    audio.pause();
+  audio.onplaying = () => {
+    setPlaying(true);
   };
+
+  const play = (item: IMusicItem) => {
+    audio.src = item.previewUrl;
+    console.log(audio.oncanplay);
+    audio.play();
+    setPlayingItem(item);
+  };
+
+  // const pause = (url: string) => {
+  //   audio.pause();
+  // };
   return (
     <>
       <List
@@ -48,20 +64,26 @@ export default function TodoMusicList({ list }: any) {
         aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            Searched Result
+            <>
+              <b> Searched Result: </b>
+              {playing ? (
+                <Div>
+                  <PlayCircleOutlineIcon /> Now Playing:{" "}
+                  {playingItem?.trackName}
+                </Div>
+              ) : null}
+            </>
           </ListSubheader>
         }
         className={classes.root}
       >
         {list.map((item: IMusicItem, index: number) => (
-          
-            <ListItem key={index}>
-              <ListItemIcon>
-                <PlayCircleOutlineIcon onClick={() => play(item.previewUrl)} />
-              </ListItemIcon>
-              <ListItemText primary={item.trackName} />
-            </ListItem>
-          
+          <ListItem key={index}>
+            <ListItemIcon>
+              <AlbumIcon onClick={() => play(item)} />
+            </ListItemIcon>
+            <ListItemText primary={item.trackName} />
+          </ListItem>
         ))}
       </List>
     </>

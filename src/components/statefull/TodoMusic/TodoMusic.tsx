@@ -11,12 +11,23 @@ import { IState } from "../../../interfaces/State";
 
 import { IMusicItem } from "../../../interfaces/MusicItem";
 import TodoMusicList from "../../stateless/TodoMusicList/TodoMusicList";
+import styled from "styled-components";
+
+const Div = styled.div`
+  padding: 0 10px;
+`;
+
+const Text = styled(TextField)`
+  margin: 10px auto;
+`;
 
 const TodoMusic = (props: any) => {
   const dispatch = useDispatch();
   const [term, setTerm] = useState("");
 
-  const list = useSelector((state: IState) => getMusicResult(state));
+  const list: IMusicItem[] = useSelector((state: IState) =>
+    getMusicResult(state)
+  );
 
   const isLoading = useSelector((state: IState) => getMusicStatus(state));
 
@@ -29,13 +40,20 @@ const TodoMusic = (props: any) => {
     unsubscribe = dispatch(SearchMusic(term));
   };
 
+  const onEnter = (e: KeyboardEvent | any) => {
+    if (e.key === "Enter") {
+      unsubscribe = dispatch(SearchMusic(term));
+    }
+  };
+
   return (
-    <>
-      <TextField
+    <Div>
+      <Text
         id="search-term"
         label="Find music..."
         variant="outlined"
         fullWidth
+        onKeyDown={e => onEnter(e)}
         onChange={e => setTerm(e.target.value)}
       />
       <Button title="Search music" onClick={handleSubmit}>
@@ -50,7 +68,7 @@ const TodoMusic = (props: any) => {
           </>
         )}
       </ul>
-    </>
+    </Div>
   );
 };
 
