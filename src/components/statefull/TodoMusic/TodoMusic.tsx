@@ -10,6 +10,7 @@ import {
 import { IState } from "../../../interfaces/State";
 
 import { IMusicItem } from "../../../interfaces/MusicItem";
+import TodoMusicList from "../../stateless/TodoMusicList/TodoMusicList";
 
 const TodoMusic = (props: any) => {
   const dispatch = useDispatch();
@@ -45,9 +46,7 @@ const TodoMusic = (props: any) => {
           <li>loading...</li>
         ) : (
           <>
-            {list.map((item: IMusicItem, index) => (
-              <li key={item.previewUrl}>{item.artistName}</li>
-            ))}
+            <TodoMusicList list={list} />
           </>
         )}
       </ul>
