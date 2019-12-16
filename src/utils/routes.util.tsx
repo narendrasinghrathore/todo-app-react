@@ -8,13 +8,17 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 import SuspenseContainer from "../shared/Loader/Loader";
 import { IRouteConfig } from "../interfaces/routeconfig.";
 import LockIcon from "@material-ui/icons/Lock";
-
+import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 /**
  * Lazy loading routes
  */
 const Login = lazy(() => import("../components/stateless/Login/Login"));
 
 const TodoAdd = lazy(() => import("../components/stateless/TodoAdd/TodoAdd"));
+
+const TodoMusic = lazy(() =>
+  import("../components/statefull/TodoMusic/TodoMusic")
+);
 
 export const RouteConfig: IRouteConfig[] = [
   {
@@ -37,7 +41,18 @@ export const RouteConfig: IRouteConfig[] = [
     label: "Add new todo",
     icon: <PostAddIcon />
   },
-
+  {
+    component: (
+      <SuspenseContainer>
+        <TodoMusic />
+      </SuspenseContainer>
+    ),
+    goto: "/music",
+    path: "/music", // Optional parameter are postfix by ? and should be placed at end
+    value: "music",
+    label: "Find Music",
+    icon: <LibraryMusicIcon />
+  },
   {
     path: "/images",
     component: <TodoImageList />,

@@ -47,7 +47,7 @@ export default function TodoImageList() {
   useEffect(() => {
     const http = new AxiosHttp();
 
-    return http.http(
+    return http.request(
       {
         method: "GET",
         url: `https://picsum.photos/v2/list?page=${pageNumber}&limit=${pageSizeLimit}`

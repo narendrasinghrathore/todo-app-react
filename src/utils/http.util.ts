@@ -1,8 +1,4 @@
-import axios, {
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError
-} from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 import Logger from "./logger.util";
 
@@ -58,7 +54,7 @@ export default class AxiosHttp {
     instance.interceptors.response.eject(HttpResponseInterceptor);
   };
 
-  http = (
+  request = (
     config: AxiosRequestConfig,
     resolve: Function,
     reject: Function
