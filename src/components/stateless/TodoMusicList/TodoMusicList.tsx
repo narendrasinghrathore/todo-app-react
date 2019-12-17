@@ -9,6 +9,8 @@ import { IMusicItem } from "../../../interfaces/MusicItem";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import AlbumIcon from "@material-ui/icons/Album";
 import styled from "styled-components";
+import NowPlaying from "../NowPlaying/NowPlaying";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -25,15 +27,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const Div = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 `;
-export default function TodoMusicList({ list }: any) {
+export default function TodoMusicList(props: any) {
+  const { list }: { list: IMusicItem[] } = props;
   const classes = useStyles();
   const audio = new Audio();
 
   // const [buffer, setBuffer] = useState(false);
   const [playingItem, setPlayingItem] = useState<IMusicItem>();
   const [playing, setPlaying] = useState(false);
+  const [pausedItem, setPauseItem] = useState<IMusicItem>();
 
   audio.onwaiting = () => {
     console.log("buffering..");
@@ -47,32 +51,48 @@ export default function TodoMusicList({ list }: any) {
     setPlaying(true);
   };
 
+  audio.onended = () => {
+    setPlaying(false);
+    setPlayingItem(undefined);
+  };
+
   const play = (item: IMusicItem) => {
     audio.src = item.previewUrl;
-    console.log(audio.oncanplay);
     audio.play();
     setPlayingItem(item);
   };
 
-  // const pause = (url: string) => {
-  //   audio.pause();
-  // };
+  audio.onpause = () => {
+    console.log("Paused");
+  };
+
+  const pausePlay = (item: IMusicItem) => {
+    if (pausedItem?.previewUrl === item.previewUrl) {
+      audio.play();
+      setPauseItem(undefined);
+    } else if (item.previewUrl === playingItem?.previewUrl) {
+      setPauseItem(item);
+    }
+  };
+
   return (
     <>
+      <NowPlaying
+        open={playing}
+        content={
+          <Div>
+            <PlayCircleOutlineIcon style={{ padding: "0 10px 0 0" }} />
+            Now Playing: {playingItem?.trackName} | Album:{" "}
+            {playingItem?.artistName}
+          </Div>
+        }
+      />
       <List
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            <>
-              <b> Searched Result: </b>
-              {playing ? (
-                <Div>
-                  <PlayCircleOutlineIcon /> Now Playing:{" "}
-                  {playingItem?.trackName}
-                </Div>
-              ) : null}
-            </>
+            <>{list.length > 0 && <b> Searched Result: </b>}</>
           </ListSubheader>
         }
         className={classes.root}
@@ -80,7 +100,11 @@ export default function TodoMusicList({ list }: any) {
         {list.map((item: IMusicItem, index: number) => (
           <ListItem key={index}>
             <ListItemIcon>
-              <AlbumIcon onClick={() => play(item)} />
+              {playingItem?.previewUrl === item.previewUrl ? (
+                <PauseCircleOutlineIcon onClick={() => pausePlay(item)} />
+              ) : (
+                <AlbumIcon onClick={() => play(item)} />
+              )}
             </ListItemIcon>
             <ListItemText primary={item.trackName} />
           </ListItem>
