@@ -1,14 +1,17 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, lazy } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import RouterNavigation from "./utils/routes.util";
 import { MyThemeContext } from "./context/ThemeManager";
-import { ThemeWidget } from "./components/stateless/ThemeWidget/ThemeWidget";
+
 import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
-import NavDrawer from "./shared/Drawer/NavDrawer";
+
 import SuspenseContainer from "./shared/Loader/Loader";
 import NotificationSnackbar from "./components/stateless/NotificationSnackBar/NotificationSnackbar";
+
+const ThemeWidget = lazy(() =>  import("./components/stateless/ThemeWidget/ThemeWidget"));
+const NavDrawer = lazy(() => import("./shared/Drawer/NavDrawer"));
 /**
  * Routing configuration
  */
@@ -32,7 +35,9 @@ export default function App() {
       <Fragment>
         <MyThemeContext.Provider value={theme}>
           <Router>
-            <NavDrawer />
+            <SuspenseContainer>
+              <NavDrawer />
+            </SuspenseContainer>
             <NotificationSnackbar />
             <div className="App">
               <header className="App-header">

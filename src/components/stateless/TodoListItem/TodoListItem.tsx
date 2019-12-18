@@ -36,8 +36,8 @@ export function TodoListItem(props: any) {
   };
 
   return (
-    <animated.div style={config}>
-      <ListItem>
+    <ListItem>
+      <animated.div style={config}>
         <ListItemAvatar>
           <Avatar>
             <EventNoteIcon color={color} />
@@ -66,7 +66,7 @@ export function TodoListItem(props: any) {
             <DeleteIcon color={color} />
           </IconButton>
         </ListItemSecondaryAction>
-      </ListItem>
-    </animated.div>
+      </animated.div>
+    </ListItem>
   );
 }

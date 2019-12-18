@@ -4,7 +4,7 @@ import styled from "styled-components";
 import React from "react";
 import { IThemes } from "../../../interfaces/Themes";
 
-export function ThemeWidget(props: any) {
+export default function ThemeWidget(props: any) {
   const Div = styled.div`
     position: absolute;
     right: 10px;

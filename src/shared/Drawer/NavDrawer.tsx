@@ -82,7 +82,7 @@ export default function NavDrawer() {
 
   return (
     <div style={{ padding: 10 }}>
-      <IconButton onClick={toggleDrawer("left", true)} color={color}>
+      <IconButton role="button" aria-label="open menu drawer"  onClick={toggleDrawer("left", true)} color={color}>
         {state["left"] ? <MenuOpenIcon /> : <MenuIcon />}
       </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
