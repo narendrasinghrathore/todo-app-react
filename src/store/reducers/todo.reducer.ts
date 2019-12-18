@@ -2,7 +2,8 @@ import {
   ADD_TODO,
   DELETE_TODO,
   GET_TODO,
-  REMOVE_SELECTED_TODO
+  REMOVE_SELECTED_TODO,
+  EDIT_TODO
 } from "../actions/todo.action";
 import { ITodoListItem } from "../../interfaces/TodoListItem";
 export interface TodoAppState {
@@ -42,6 +43,16 @@ const todos = (state = intialState, action: any): TodoAppState => {
         ...state.list.filter(item => item.id === action.id)
       ][0];
       return { ...state, selectedTodo };
+    }
+    case EDIT_TODO: {
+      const { id, content, name } = action.item as ITodoListItem;
+      const list = [
+        ...state.list.map(item =>
+          item.id === id ? { ...item, name, content } : item
+        )
+      ];
+
+      return { ...state, list };
     }
     case REMOVE_SELECTED_TODO: {
       const selectedTodo = undefined;

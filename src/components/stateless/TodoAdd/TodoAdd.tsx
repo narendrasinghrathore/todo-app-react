@@ -6,11 +6,12 @@ import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyThemeContext } from "../../../context/ThemeManager";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AddTodo,
   RemoveSelectedTodo,
-  GetSelectedTodo
+  GetSelectedTodo,
+  EditSelectedTodo
 } from "../../../store/actions/todo.action";
 import { useParams, useHistory } from "react-router-dom";
 import { IState } from "../../../interfaces/State";
@@ -18,6 +19,7 @@ import { getSelectedTodoState } from "../../../store/selectors/todo.selector";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = () =>
   makeStyles(theme => ({
@@ -38,7 +40,7 @@ const useStyles = () =>
       width: 200
     }
   }));
-const TodoAdd = (props: any) => {
+const TodoAdd = () => {
   /**
    * The contextType property on a class can be assigned a Context object created by React.createContext().
    * This lets you consume the nearest current value of that Context type using this.context.
@@ -57,6 +59,8 @@ const TodoAdd = (props: any) => {
   const selectedTodo = useSelector((state: IState) =>
     getSelectedTodoState(state)
   );
+
+  const [edit, setEdit] = useState(false);
 
   const theme = context;
   const color: any = theme.color;
@@ -84,7 +88,10 @@ const TodoAdd = (props: any) => {
   }, [id, selectedTodo, dispatch]);
 
   useEffect(() => {
-    if (selectedTodo) setState(selectedTodo);
+    if (selectedTodo) {
+      setEdit(true);
+      setState(selectedTodo);
+    }
   }, [selectedTodo]);
 
   // Remove selected if any on component unmount
@@ -107,10 +114,20 @@ const TodoAdd = (props: any) => {
    * Handle form submit
    */
   const handleFormSubmit = (event: any) => {
-    let item = { ...state, id: Math.random().toString() };
-    props.add(item);
-    setState(initialState);
+    if (edit) {
+      dispatch(EditSelectedTodo({ ...state }));
+    } else {
+      let item = { ...state, id: Math.random().toString() };
+      dispatch(AddTodo(item));
+    }
+    resetForm();
     event.preventDefault();
+    history.replace("/");
+  };
+
+  const resetForm = () => {
+    setState(initialState);
+    setEdit(false);
   };
 
   const handleChange = (event: any) => {
@@ -169,13 +186,9 @@ const TodoAdd = (props: any) => {
         aria-label="add"
         classes={{ root: classes!.fab }}
       >
-        <AddIcon />
+        {edit ? <SaveIcon /> : <AddIcon />}
       </Fab>
     </div>
   );
 };
-const mapDispatchoProps = (dispatch: any) => ({
-  add: (item: ITodoListItem) => dispatch(AddTodo(item))
-});
-
-export default connect(null, mapDispatchoProps)(TodoAdd);
+export default TodoAdd;

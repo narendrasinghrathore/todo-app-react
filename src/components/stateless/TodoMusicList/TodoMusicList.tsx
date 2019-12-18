@@ -42,7 +42,7 @@ export default function TodoMusicList(props: any) {
   const [buffer, setBuffer] = useState(false);
   const [playingItem, setPlayingItem] = useState<IMusicItem>();
   const [playing, setPlaying] = useState(false);
-  const [pausedItem, setPauseItem] = useState<IMusicItem>();
+  // const [pausedItem, setPauseItem] = useState<IMusicItem>();
 
   /**
    * Call when media playing ends or error
@@ -94,14 +94,14 @@ export default function TodoMusicList(props: any) {
     console.log("Paused");
   };
 
-  const pausePlay = (item: IMusicItem) => {
-    if (pausedItem?.previewUrl === item.previewUrl) {
-      audio.play();
-      setPauseItem(undefined);
-    } else if (item.previewUrl === playingItem?.previewUrl) {
-      setPauseItem(item);
-    }
-  };
+  // const pausePlay = (item: IMusicItem) => {
+  //   if (pausedItem?.previewUrl === item.previewUrl) {
+  //     audio.play();
+  //     setPauseItem(undefined);
+  //   } else if (item.previewUrl === playingItem?.previewUrl) {
+  //     setPauseItem(item);
+  //   }
+  // };
 
   return (
     <>

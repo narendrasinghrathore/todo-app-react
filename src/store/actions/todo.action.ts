@@ -4,6 +4,7 @@ export const ACTION_NAME = "[TODO]: ";
 
 export const GET_TODO = `${ACTION_NAME} GET_TODO`;
 export const ADD_TODO = `${ACTION_NAME} ADD_TODO`;
+export const EDIT_TODO = `${ACTION_NAME} EDIT_TODO`;
 export const DELETE_TODO = `${ACTION_NAME} DELETE_TODO`;
 export const REMOVE_SELECTED_TODO = `${ACTION_NAME} REMOVE_SELECTED_TODO`;
 
@@ -15,6 +16,11 @@ export const AddTodo = (item: ITodoListItem) => ({
 export const GetSelectedTodo = (id: string) => ({
   type: GET_TODO,
   id
+});
+
+export const EditSelectedTodo = (item: ITodoListItem) => ({
+  type: EDIT_TODO,
+  item
 });
 
 export const RemoveSelectedTodo = () => ({
