@@ -11,6 +11,9 @@ import AlbumIcon from "@material-ui/icons/Album";
 import styled from "styled-components";
 import NowPlaying from "../NowPlaying/NowPlaying";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
+import { useDispatch } from "react-redux";
+import { showNotificationAction } from "../../../store/actions/notification.action";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -34,13 +37,24 @@ export default function TodoMusicList(props: any) {
   const classes = useStyles();
   const audio = new Audio();
 
-  // const [buffer, setBuffer] = useState(false);
+  const dispatch = useDispatch();
+
+  const [buffer, setBuffer] = useState(false);
   const [playingItem, setPlayingItem] = useState<IMusicItem>();
   const [playing, setPlaying] = useState(false);
   const [pausedItem, setPauseItem] = useState<IMusicItem>();
 
+  /**
+   * Call when media playing ends or error
+   */
+  const onMediaPlayingEnded = () => {
+    setPlaying(false);
+    setPlayingItem(undefined);
+  };
+
   audio.onwaiting = () => {
     console.log("buffering..");
+    setBuffer(true);
   };
 
   audio.oncanplay = () => {
@@ -48,12 +62,26 @@ export default function TodoMusicList(props: any) {
   };
 
   audio.onplaying = () => {
+    setBuffer(false);
     setPlaying(true);
   };
 
   audio.onended = () => {
-    setPlaying(false);
-    setPlayingItem(undefined);
+    onMediaPlayingEnded();
+  };
+
+  /**
+   * If media playing fail
+   */
+  audio.onerror = () => {
+    onMediaPlayingEnded();
+    dispatch(
+      showNotificationAction({
+        message: "Media not found, plaback fail.",
+        open: true,
+        autohide: 2000
+      })
+    );
   };
 
   const play = (item: IMusicItem) => {
@@ -101,7 +129,11 @@ export default function TodoMusicList(props: any) {
           <ListItem key={index}>
             <ListItemIcon>
               {playingItem?.previewUrl === item.previewUrl ? (
-                <PauseCircleOutlineIcon onClick={() => pausePlay(item)} />
+                buffer ? (
+                  <HourglassEmptyIcon />
+                ) : (
+                  <PauseCircleOutlineIcon />
+                )
               ) : (
                 <AlbumIcon onClick={() => play(item)} />
               )}

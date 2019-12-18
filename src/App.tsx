@@ -8,6 +8,7 @@ import { IThemes, Colors } from "./interfaces/Themes";
 import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 import NavDrawer from "./shared/Drawer/NavDrawer";
 import SuspenseContainer from "./shared/Loader/Loader";
+import NotificationSnackbar from "./components/stateless/NotificationSnackBar/NotificationSnackbar";
 /**
  * Routing configuration
  */
@@ -32,6 +33,7 @@ export default function App() {
         <MyThemeContext.Provider value={theme}>
           <Router>
             <NavDrawer />
+            <NotificationSnackbar />
             <div className="App">
               <header className="App-header">
                 <SuspenseContainer>
