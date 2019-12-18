@@ -31,7 +31,7 @@ export default function TodoListContainer(props: ITodoList) {
         });
   return (
     <>
-      <List classes={{ root: "list-container" }}>{list.reverse()}</List>;
+      <List classes={{ root: "list-container" }}>{list.reverse()}</List>
     </>
   );
 }
