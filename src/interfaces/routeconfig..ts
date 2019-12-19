@@ -12,4 +12,6 @@ export interface IRouteConfig {
   label: string;
   value: string;
   goto: string;
+  isProtected: boolean;
+  visible: boolean;
 }

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, lazy } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
-import RouterNavigation from "./utils/routes.util";
+import RouterNavigation from "./components/stateless/RouterNavigation/RouterNavigation";
 import { MyThemeContext } from "./context/ThemeManager";
 
 import { IThemes, Colors } from "./interfaces/Themes";
@@ -10,7 +10,9 @@ import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 import SuspenseContainer from "./shared/Loader/Loader";
 import NotificationSnackbar from "./components/stateless/NotificationSnackBar/NotificationSnackbar";
 
-const ThemeWidget = lazy(() =>  import("./components/stateless/ThemeWidget/ThemeWidget"));
+const ThemeWidget = lazy(() =>
+  import("./components/stateless/ThemeWidget/ThemeWidget")
+);
 const NavDrawer = lazy(() => import("./shared/Drawer/NavDrawer"));
 /**
  * Routing configuration

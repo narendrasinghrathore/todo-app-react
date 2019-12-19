@@ -19,6 +19,7 @@ import { RouteConfig } from "../../utils/routes.util";
 import { useHistory } from "react-router-dom";
 import SuspenseContainer from "../Loader/Loader";
 import { MyThemeContext } from "../../context/ThemeManager";
+import { IRouteConfig } from "../../interfaces/routeconfig.";
 /**
  * Lazy loading imports
  */
@@ -64,25 +65,32 @@ export default function NavDrawer() {
         <Greet name={name} />
       </SuspenseContainer>
       <List>
-        {RouteConfig.map((item, index) => {
-          return (
-            <ListItem
-              onClick={() => history.push(item.goto)}
-              button
-              key={index}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItem>
-          );
-        })}
+        {RouteConfig.filter((item: IRouteConfig) => item.visible).map(
+          (item: IRouteConfig, index) => {
+            return (
+              <ListItem
+                onClick={() => history.push(item.goto)}
+                button
+                key={index}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            );
+          }
+        )}
       </List>
     </div>
   );
 
   return (
     <div style={{ padding: 10 }}>
-      <IconButton role="button" aria-label="open menu drawer"  onClick={toggleDrawer("left", true)} color={color}>
+      <IconButton
+        role="button"
+        aria-label="open menu drawer"
+        onClick={toggleDrawer("left", true)}
+        color={color}
+      >
         {state["left"] ? <MenuOpenIcon /> : <MenuIcon />}
       </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer("left", false)}>

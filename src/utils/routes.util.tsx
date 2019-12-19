@@ -1,7 +1,6 @@
-import React, { Fragment, lazy } from "react";
+import React, { lazy } from "react";
 import TodoImageList from "../components/statefull/TodoImageList/TodoImageList";
 import TodoHome from "../components/statefull/TodoHome/TodoHome";
-import { Route } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
 import PostAddIcon from "@material-ui/icons/PostAdd";
@@ -20,7 +19,9 @@ const TodoMusic = lazy(() =>
   import("../components/statefull/TodoMusic/TodoMusic")
 );
 
-const PageNotFound =lazy(() => import("../components/stateless/PageNotFound/PageNotFound"));
+const PageNotFound = lazy(() =>
+  import("../components/stateless/PageNotFound/PageNotFound")
+);
 
 export const RouteConfig: IRouteConfig[] = [
   {
@@ -29,7 +30,9 @@ export const RouteConfig: IRouteConfig[] = [
     value: "home",
     label: "Home",
     icon: <HomeIcon />,
-    goto: "/"
+    goto: "/",
+    isProtected: true,
+    visible: true
   },
   {
     goto: "/add",
@@ -41,7 +44,9 @@ export const RouteConfig: IRouteConfig[] = [
     ),
     value: "add",
     label: "Add new todo",
-    icon: <PostAddIcon />
+    icon: <PostAddIcon />,
+    isProtected: true,
+    visible: true
   },
   {
     component: (
@@ -53,7 +58,9 @@ export const RouteConfig: IRouteConfig[] = [
     path: "/music", // Optional parameter are postfix by ? and should be placed at end
     value: "music",
     label: "Find Music",
-    icon: <LibraryMusicIcon />
+    icon: <LibraryMusicIcon />,
+    isProtected: true,
+    visible: true
   },
   {
     path: "/images",
@@ -61,7 +68,9 @@ export const RouteConfig: IRouteConfig[] = [
     icon: <PermMediaIcon />,
     label: "Images",
     value: "Browse images",
-    goto: "/images"
+    goto: "/images",
+    isProtected: true,
+    visible: true
   },
   {
     path: "/login",
@@ -73,7 +82,9 @@ export const RouteConfig: IRouteConfig[] = [
     icon: <LockIcon />,
     label: "Login",
     value: "login",
-    goto: "/login"
+    goto: "/login",
+    isProtected: false,
+    visible: true
   },
   {
     path: "*",
@@ -85,17 +96,8 @@ export const RouteConfig: IRouteConfig[] = [
     icon: null,
     label: "",
     value: "",
-    goto: ""
+    goto: "",
+    isProtected: false,
+    visible: false
   }
 ];
-export default function RouterNavigation(props: any) {
-  return (
-    <Fragment>
-      {RouteConfig.map((route, i) => (
-        <Route exact path={route.path} key={i}>
-          {route.component}
-        </Route>
-      ))}
-    </Fragment>
-  );
-}
