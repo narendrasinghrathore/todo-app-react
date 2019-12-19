@@ -20,6 +20,8 @@ const TodoMusic = lazy(() =>
   import("../components/statefull/TodoMusic/TodoMusic")
 );
 
+const PageNotFound =lazy(() => import("../components/stateless/PageNotFound/PageNotFound"));
+
 export const RouteConfig: IRouteConfig[] = [
   {
     path: "/",
@@ -72,6 +74,18 @@ export const RouteConfig: IRouteConfig[] = [
     label: "Login",
     value: "login",
     goto: "/login"
+  },
+  {
+    path: "*",
+    component: (
+      <SuspenseContainer>
+        <PageNotFound />
+      </SuspenseContainer>
+    ),
+    icon: null,
+    label: "",
+    value: "",
+    goto: ""
   }
 ];
 export default function RouterNavigation(props: any) {

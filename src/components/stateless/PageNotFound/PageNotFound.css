@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dedeed;
+  margin: 10px;
+  height: 85vh;
+  border-radius: 4px;
+  font-size: 2em;
+}
