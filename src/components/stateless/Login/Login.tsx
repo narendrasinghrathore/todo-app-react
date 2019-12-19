@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -10,6 +10,11 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import Fab from "@material-ui/core/Fab";
 import { MyThemeContext } from "../../../context/ThemeManager";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "../../../store/actions/login.action";
+import { loginProcessSelector } from "../../../store/selectors/login.selector";
+import { IState } from "../../../interfaces/State";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme: Theme | any) => ({
   root: (props: any) => ({
@@ -40,7 +45,21 @@ export default function Login() {
       ? theme.palette.secondary.main
       : theme.palette.primary.main;
   };
+
   const classes = useStyles({ background });
+  const dispatch = useDispatch();
+
+  const loginInProcess = useSelector((state: IState) =>
+    loginProcessSelector(state)
+  );
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = () => {
+    dispatch(loginAction({ email, password }));
+  };
+
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h3">
@@ -51,47 +70,63 @@ export default function Login() {
         application.
       </Typography>
       <div className={classes.margin}>
-        <Grid container spacing={1} alignItems="flex-end">
-          <Grid item sm={1}>
-            <AccountCircle color={color} />
+        <form>
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item sm={1}>
+              <AccountCircle color={color} />
+            </Grid>
+            <Grid item sm={11}>
+              <TextField
+                fullWidth
+                id="input-email"
+                label="Email address"
+                type="email"
+                color={color}
+                onChange={e => setEmail(e.target.value)}
+                disabled={loginInProcess}
+              />
+            </Grid>
           </Grid>
-          <Grid item sm={11}>
-            <TextField
-              fullWidth
-              id="input-email"
-              label="Email address"
-              type="email"
-              color={color}
-            />
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item sm={1}>
+              <LockIcon color={color} />
+            </Grid>
+            <Grid item sm={11}>
+              <TextField
+                color={color}
+                fullWidth
+                id="input-password"
+                label="Password"
+                type="password"
+                disabled={loginInProcess}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={1} alignItems="flex-end">
-          <Grid item sm={1}>
-            <LockIcon color={color} />
+          <Grid container>
+            <Grid item sm={12}>
+              <Fab
+                color={color}
+                variant="extended"
+                aria-label="add"
+                className={classes.margin}
+                onClick={onSubmit}
+                disabled={loginInProcess}
+              >
+                {loginInProcess ? (
+                  <CircularProgress
+                    style={{ marginRight: "5px" }}
+                    size={24}
+                    color={color}
+                  />
+                ) : (
+                  <LockOpenIcon style={{ marginRight: "5px" }} />
+                )}
+                sign in
+              </Fab>
+            </Grid>
           </Grid>
-          <Grid item sm={11}>
-            <TextField
-              color={color}
-              fullWidth
-              id="input-password"
-              label="Password"
-              type="password"
-            />
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item sm={12}>
-            <Fab
-              color={color}
-              variant="extended"
-              aria-label="add"
-              className={classes.margin}
-            >
-              <LockOpenIcon />
-              sign in
-            </Fab>
-          </Grid>
-        </Grid>
+        </form>
       </div>
     </Paper>
   );
