@@ -17,7 +17,7 @@ export const nameSelector = (state: IState) => state.login.name;
  */
 export const emailSelector = (state: IState) => state.login.email;
 /**
- * Return is user is authenticated i.e. true or false
+ * Return if user is authenticated i.e. true or false
  * @param state @type IState
  */
 export const isAuthSelector = (state: IState) => state.login.isAuthenticated;

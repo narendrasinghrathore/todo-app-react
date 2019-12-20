@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 import { IState } from "../../../interfaces/State";
 import { isAuthSelector } from "../../../store/selectors/login.selector";
 export default function RouterNavigation(props: any) {
-  const loginInProcess = useSelector((state: IState) => isAuthSelector(state));
+  const isAuthenticated = useSelector((state: IState) => isAuthSelector(state));
   return (
     <Fragment>
-      {RouteConfig.map((route, i) =>
-        route.isProtected ? (
-          <Route
-            render={({ location }) =>
-              loginInProcess ? (
+      {RouteConfig.map((route, i) => (
+        <Route
+          render={({ location }) =>
+            route.isProtected ? (
+              isAuthenticated ? (
                 route.component
               ) : (
                 <Redirect
@@ -22,17 +22,15 @@ export default function RouterNavigation(props: any) {
                   }}
                 />
               )
-            }
-            exact
-            path={route.path}
-            key={i}
-          />
-        ) : (
-          <Route exact path={route.path} key={i}>
-            {route.component}
-          </Route>
-        )
-      )}
+            ) : (
+              route.component
+            )
+          }
+          exact={route.path === "/" ? true : false}
+          path={route.path}
+          key={i}
+        />
+      ))}
     </Fragment>
   );
 }

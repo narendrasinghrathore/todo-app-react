@@ -15,7 +15,7 @@ import { loginAction } from "../../../store/actions/login.action";
 import { loginProcessSelector } from "../../../store/selectors/login.selector";
 import { IState } from "../../../interfaces/State";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme | any) => ({
   root: (props: any) => ({
@@ -52,8 +52,12 @@ export default function Login() {
 
   let location = useLocation();
 
+  /**
+   * For navigation i.e router api
+   */
+  const history = useHistory();
+
   let { from } = location.state || { from: { pathname: "/" } };
-  
 
   const loginInProcess = useSelector((state: IState) =>
     loginProcessSelector(state)
@@ -63,9 +67,11 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const onSubmit = () => {
-    // dispatch(loginAction({ email, password }).then(() => {
-
-    // });
+    dispatch(
+      loginAction({ email, password }, () => {
+        history.replace(from);
+      })
+    );
   };
 
   return (

@@ -19,10 +19,6 @@ const TodoMusic = lazy(() =>
   import("../components/statefull/TodoMusic/TodoMusic")
 );
 
-const PageNotFound = lazy(() =>
-  import("../components/stateless/PageNotFound/PageNotFound")
-);
-
 export const RouteConfig: IRouteConfig[] = [
   {
     path: "/",
@@ -81,23 +77,23 @@ export const RouteConfig: IRouteConfig[] = [
     ),
     icon: <LockIcon />,
     label: "Login",
-    value: "login",
+    value: "Login page",
     goto: "/login",
     isProtected: false,
     visible: true
-  },
-  {
-    path: "*",
-    component: (
-      <SuspenseContainer>
-        <PageNotFound />
-      </SuspenseContainer>
-    ),
-    icon: null,
-    label: "",
-    value: "",
-    goto: "",
-    isProtected: false,
-    visible: false
   }
+  // {
+  //   path: "*",
+  //   component: (
+  //     <SuspenseContainer>
+  //       <PageNotFound />
+  //     </SuspenseContainer>
+  //   ),
+  //   icon: null,
+  //   label: "",
+  //   value: "",
+  //   goto: "",
+  //   isProtected: false,
+  //   visible: false
+  // }
 ];

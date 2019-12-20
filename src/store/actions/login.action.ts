@@ -1,5 +1,6 @@
 import { IUser } from "../../interfaces/login.interface";
 
+
 const LOGIN = "[LOGIN COMPONENT] : ";
 export const LOGIN_INIT = `${LOGIN} Login INIT`;
 export const LOGIN_SUCCESS = `${LOGIN} Login SUCCESS`;
@@ -24,12 +25,13 @@ export const logoutRequest = () => ({
   type: LOGOUT
 });
 
-export const loginAction = (user: IUser) => {
+export const loginAction = (user: IUser, callback: Function) => {
   return (dispatch: any) => {
     dispatch(loginRequestInit(user));
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         dispatch(loginRequestSuccess({ ...user }));
+        callback();
         resolve();
       }, 1500);
     });

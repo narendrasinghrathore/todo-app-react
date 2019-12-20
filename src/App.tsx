@@ -1,6 +1,6 @@
 import React, { Fragment, useState, lazy } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RouterNavigation from "./components/stateless/RouterNavigation/RouterNavigation";
 import { MyThemeContext } from "./context/ThemeManager";
 
@@ -9,6 +9,8 @@ import { ErrorBoundaryComponent } from "./error-component/ErrorComponent";
 
 import SuspenseContainer from "./shared/Loader/Loader";
 import NotificationSnackbar from "./components/stateless/NotificationSnackBar/NotificationSnackbar";
+
+import PageNotFound from "./components/stateless/PageNotFound/PageNotFound";
 
 const ThemeWidget = lazy(() =>
   import("./components/stateless/ThemeWidget/ThemeWidget")
@@ -50,6 +52,7 @@ export default function App() {
             </div>
             <Switch>
               <RouterNavigation />
+              <Route path="*" children={<PageNotFound />} />
             </Switch>
           </Router>
         </MyThemeContext.Provider>

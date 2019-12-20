@@ -1,8 +1,8 @@
-.container {
+.pagenotfound-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #dedeed;
+  background-color: #dedede;
   margin: 10px;
   height: 85vh;
   border-radius: 4px;

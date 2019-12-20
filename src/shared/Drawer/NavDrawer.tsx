@@ -20,6 +20,12 @@ import { useHistory } from "react-router-dom";
 import SuspenseContainer from "../Loader/Loader";
 import { MyThemeContext } from "../../context/ThemeManager";
 import { IRouteConfig } from "../../interfaces/routeconfig.";
+import { useSelector, useDispatch } from "react-redux";
+import { IState } from "../../interfaces/State";
+import { isAuthSelector } from "../../store/selectors/login.selector";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
+import { logoutRequest } from "../../store/actions/login.action";
 /**
  * Lazy loading imports
  */
@@ -29,6 +35,10 @@ type DrawerSide = "top" | "left" | "bottom" | "right";
 
 export default function NavDrawer() {
   const context = useContext(MyThemeContext);
+  const isAuthenticated = useSelector((state: IState) => isAuthSelector(state));
+
+  const dispatch = useDispatch();
+
   const { color }: any = context;
   const name = "Narendra";
   const [state, setState] = React.useState({
@@ -54,6 +64,11 @@ export default function NavDrawer() {
 
     setState({ ...state, [side]: open });
   };
+
+  const logOut = () => {
+    dispatch(logoutRequest());
+    history.replace("/login");
+  };
   const sideList = (side: DrawerSide) => (
     <div
       style={{ width: 250 }}
@@ -67,11 +82,17 @@ export default function NavDrawer() {
       <List>
         {RouteConfig.filter((item: IRouteConfig) => item.visible).map(
           (item: IRouteConfig, index) => {
+            const style =
+              isAuthenticated && item.path === "/login"
+                ? { display: "none" }
+                : {};
+
             return (
               <ListItem
                 onClick={() => history.push(item.goto)}
                 button
                 key={index}
+                style={{ ...style }}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />
@@ -79,6 +100,14 @@ export default function NavDrawer() {
             );
           }
         )}
+        {isAuthenticated ? (
+          <ListItem onClick={logOut} button key={RouteConfig.length + 1}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItem>
+        ) : null}
       </List>
     </div>
   );
