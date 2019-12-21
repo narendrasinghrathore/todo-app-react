@@ -1,9 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, lazy } from "react";
 import { RouteConfig } from "../../../utils/routes.util";
 import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IState } from "../../../interfaces/State";
 import { isAuthSelector } from "../../../store/selectors/login.selector";
+import SuspenseContainer from "../../../shared/Loader/Loader";
+
+const PageNotFound = lazy(() => import("../PageNotFound/PageNotFound"));
 export default function RouterNavigation(props: any) {
   const isAuthenticated = useSelector((state: IState) => isAuthSelector(state));
   return (
@@ -31,6 +34,16 @@ export default function RouterNavigation(props: any) {
           key={i}
         />
       ))}
+      <Route
+        key={RouteConfig.length}
+        render={({ location }) => {
+          return (
+            <SuspenseContainer>
+              <PageNotFound from={location.pathname} />
+            </SuspenseContainer>
+          );
+        }}
+      />
     </Fragment>
   );
 }
