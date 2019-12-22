@@ -8,6 +8,7 @@ import SuspenseContainer from "../shared/Loader/Loader";
 import { IRouteConfig } from "../interfaces/routeconfig.";
 import LockIcon from "@material-ui/icons/Lock";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+// import PageNotFound from "../components/stateless/PageNotFound/PageNotFound";
 /**
  * Lazy loading routes
  */
@@ -81,12 +82,12 @@ export const RouteConfig: IRouteConfig[] = [
     goto: "/login",
     isProtected: false,
     visible: true
-  }
+  },
   // {
   //   path: "*",
   //   component: (
   //     <SuspenseContainer>
-  //       <PageNotFound />
+  //       <PageNotFound from={window.location.pathname} />
   //     </SuspenseContainer>
   //   ),
   //   icon: null,

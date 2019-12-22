@@ -36,7 +36,6 @@ export default function RouterNavigation(props: any) {
       ))}
       <Route
         key={RouteConfig.length}
-        path="*"
         render={({ location }) => {
           return (
             <SuspenseContainer>

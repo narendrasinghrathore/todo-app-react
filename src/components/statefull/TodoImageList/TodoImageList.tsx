@@ -4,6 +4,7 @@ import AxiosHttp from "../../../utils/http.util";
 import { ImageListItem_ } from "../../../interfaces/ImageListItem";
 import { SimpleDialog } from "../../stateless/Dialog/Dialog";
 import SuspenseContainer from "../../../shared/Loader/Loader";
+import styled from "styled-components";
 /**
  * Lazy loading components
  */
@@ -14,6 +15,15 @@ const ImageListPaging = lazy(() =>
   import("../../stateless/ImageListPaging/ImageListPaging")
 );
 const ImageLoader = lazy(() => import("../../../shared/ImageLoading"));
+
+const P = styled.p`
+  margin: 10px;
+`;
+
+const A = styled.a`
+  cursor: pointer;
+  text-decoration: underline;
+`;
 
 export default function TodoImageList() {
   const imageGridStyletyle = {
@@ -35,6 +45,8 @@ export default function TodoImageList() {
 
   const [pageNumber, setPageNumber] = useState(1);
 
+  const [imagesLoadingError, setImagesLodingError] = useState(false);
+
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState<ImageListItem_>({
     author: "None"
@@ -45,22 +57,8 @@ export default function TodoImageList() {
   };
 
   useEffect(() => {
-    const http = new AxiosHttp();
-
-    return http.request(
-      {
-        method: "GET",
-        url: `https://picsum.photos/v2/list?page=${pageNumber}&limit=${pageSizeLimit}`
-      },
-      (data: any) => {
-        const { data: list } = data;
-        setList(list);
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
-  }, [pageSizeLimit, pageNumber]);
+    return GetImages(pageNumber, pageSizeLimit);
+  }, [pageNumber, pageSizeLimit]);
 
   const openModal = (item: ImageListItem_) => {
     setOpen(true);
@@ -84,37 +82,67 @@ export default function TodoImageList() {
   // https://picsum.photos/id/1020/367/267
   return (
     <>
-      <SimpleDialog
-        selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
-        title={selectedValue["author"]}
-      >
-        <SuspenseContainer>
-          <ImageLoader
-            src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
-            alt={selectedValue.author}
-            width={1280}
-            height={720}
-          />
-        </SuspenseContainer>
-      </SimpleDialog>
-      <SuspenseContainer>
-        <ImageListPaging
-          pageNumber={pageNumber}
-          pageLimit={pageSizeLimit}
-          updatePageSize={updatePageSize}
-          pagePrevious={pagePreviousEvent}
-          pageNext={pageNextEvent}
-        />
-      </SuspenseContainer>
-      <SuspenseContainer>
-        <ImageGridList
-          list={list}
-          classes={imageGridStyletyle}
-          openModal={openModal}
-        />
-      </SuspenseContainer>
+      {imagesLoadingError ? (
+        <P>
+          We are facing some network error,{" "}
+          <A onClick={() => GetImages(pageNumber, pageSizeLimit)}>
+            click here to try again
+          </A>
+        </P>
+      ) : (
+        <>
+          <SimpleDialog
+            selectedValue={selectedValue}
+            open={open}
+            onClose={handleClose}
+            title={selectedValue["author"]}
+          >
+            <SuspenseContainer>
+              <ImageLoader
+                src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
+                alt={selectedValue.author}
+                width={1280}
+                height={720}
+              />
+            </SuspenseContainer>
+          </SimpleDialog>
+          <SuspenseContainer>
+            <ImageListPaging
+              pageNumber={pageNumber}
+              pageLimit={pageSizeLimit}
+              updatePageSize={updatePageSize}
+              pagePrevious={pagePreviousEvent}
+              pageNext={pageNextEvent}
+            />
+          </SuspenseContainer>
+          <SuspenseContainer>
+            <ImageGridList
+              list={list}
+              classes={imageGridStyletyle}
+              openModal={openModal}
+            />
+          </SuspenseContainer>
+        </>
+      )}
     </>
   );
+
+  function GetImages(pageNumber: number, pageSizeLimit: number) {
+    setImagesLodingError(false);
+    const http = new AxiosHttp();
+    return http.request(
+      {
+        method: "GET",
+        url: `https://picsum.photos/v2/list?page=${pageNumber}&limit=${pageSizeLimit}`
+      },
+      (data: any) => {
+        const { data: list } = data;
+        setList(list);
+      },
+      (err: any) => {
+        setImagesLodingError(true);
+        console.log(err);
+      }
+    );
+  }
 }

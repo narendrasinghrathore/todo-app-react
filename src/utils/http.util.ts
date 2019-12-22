@@ -72,6 +72,9 @@ export default class AxiosHttp {
           method: config.method
         });
         resolve(data);
+      }, (rejected: any) => {
+        Logger().add({ ...rejected });
+        reject(rejected);
       })
       .catch((err: any) => {
         Logger().add({ ...err });
