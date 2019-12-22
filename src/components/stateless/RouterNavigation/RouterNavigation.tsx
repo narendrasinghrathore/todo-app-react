@@ -34,16 +34,11 @@ export default function RouterNavigation(props: any) {
           key={i}
         />
       ))}
-      <Route
-        key={RouteConfig.length}
-        render={({ location }) => {
-          return (
-            <SuspenseContainer>
-              <PageNotFound from={location.pathname} />
-            </SuspenseContainer>
-          );
-        }}
-      />
+      <Route key={RouteConfig.length}>
+        <SuspenseContainer>
+          <PageNotFound />
+        </SuspenseContainer>
+      </Route>
     </Fragment>
   );
 }

@@ -1,9 +1,11 @@
 import React from "react";
 import "./PageNotFound.css";
-export default function PageNotFound({ from }: { from: string }) {
+import { useLocation } from "react-router-dom";
+export default function PageNotFound() {
+  let location = useLocation();
   return (
     <section className="pagenotfound-container">
-      Page: {from} not found.
+      Page: {location.pathname} not found.
     </section>
   );
 }
