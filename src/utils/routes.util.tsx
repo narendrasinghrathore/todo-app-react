@@ -82,19 +82,5 @@ export const RouteConfig: IRouteConfig[] = [
     goto: "/login",
     isProtected: false,
     visible: true
-  },
-  // {
-  //   path: "*",
-  //   component: (
-  //     <SuspenseContainer>
-  //       <PageNotFound from={window.location.pathname} />
-  //     </SuspenseContainer>
-  //   ),
-  //   icon: null,
-  //   label: "",
-  //   value: "",
-  //   goto: "",
-  //   isProtected: false,
-  //   visible: false
-  // }
+  }
 ];

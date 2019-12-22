@@ -1,6 +1,6 @@
 import React, { Fragment, useState, lazy } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import RouterNavigation from "./components/stateless/RouterNavigation/RouterNavigation";
 import { MyThemeContext } from "./context/ThemeManager";
 
@@ -48,9 +48,7 @@ export default function App() {
                 </SuspenseContainer>
               </header>
             </div>
-            <Switch>
-              <RouterNavigation />
-            </Switch>
+            <RouterNavigation />
           </Router>
         </MyThemeContext.Provider>
       </Fragment>
