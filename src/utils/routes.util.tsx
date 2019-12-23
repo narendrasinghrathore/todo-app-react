@@ -8,6 +8,8 @@ import SuspenseContainer from "../shared/Loader/Loader";
 import { IRouteConfig } from "../interfaces/routeconfig.";
 import LockIcon from "@material-ui/icons/Lock";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+
+import EmailIcon from "@material-ui/icons/Email";
 // import PageNotFound from "../components/stateless/PageNotFound/PageNotFound";
 /**
  * Lazy loading routes
@@ -19,6 +21,8 @@ const TodoAdd = lazy(() => import("../components/stateless/TodoAdd/TodoAdd"));
 const TodoMusic = lazy(() =>
   import("../components/statefull/TodoMusic/TodoMusic")
 );
+
+const Email = lazy(() => import("../components/statefull/Email/Email"));
 
 export const RouteConfig: IRouteConfig[] = [
   {
@@ -67,6 +71,20 @@ export const RouteConfig: IRouteConfig[] = [
     value: "Browse images",
     goto: "/images",
     isProtected: true,
+    visible: true
+  },
+  {
+    path: "/email",
+    component: (
+      <SuspenseContainer>
+        <Email />
+      </SuspenseContainer>
+    ),
+    icon: <EmailIcon />,
+    label: "Email",
+    value: "Email page",
+    goto: "/email",
+    isProtected: false,
     visible: true
   },
   {
