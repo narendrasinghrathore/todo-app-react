@@ -1,11 +1,13 @@
-import React from "react";
+import React, { lazy } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Emailitems from "../../stateless/EmailItems/EmailItems";
+
 import SuspenseContainer from "../../../shared/Loader/Loader";
-import ShowEmail from "../../stateless/ShowEmail/ShowEmail";
+const ShowEmail = lazy(() => import("../../stateless/ShowEmail/ShowEmail"));
+
+const Emailitems = lazy(() => import("../../stateless/EmailItems/EmailItems"));
+
 export default function Email() {
- 
   return (
     <Grid container>
       <Grid
@@ -14,8 +16,9 @@ export default function Email() {
         xs={3}
       >
         <Paper>
-          <SuspenseContainer></SuspenseContainer>
-          <Emailitems />
+          <SuspenseContainer>
+            <Emailitems />
+          </SuspenseContainer>
         </Paper>
       </Grid>
       <Grid item xs={8}>
