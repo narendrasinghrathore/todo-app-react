@@ -35,7 +35,7 @@ const email = (state = initialState, action: any) => {
 
         }
         case LOAD_SELECTED_EMAIL: {
-            const selected = state.emails.find(item => item.id);
+            const selected = state.emails.find(item => item.id === action.id);
             return {
                 ...state,
                 selected

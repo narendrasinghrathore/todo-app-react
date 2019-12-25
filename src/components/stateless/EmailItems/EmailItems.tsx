@@ -4,15 +4,21 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { IEmailItem } from "../../../interfaces/EmailItems";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllEmails } from "../../../store/selectors/email.selector";
 import { IState } from "../../../interfaces/State";
-import { getEmails } from "../../../store/actions/email.action";
+import {
+  getEmails,
+  loadSelecteEmail
+} from "../../../store/actions/email.action";
+import { useHistory, useRouteMatch } from "react-router-dom";
 export default function Emailitems() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const {url} = useRouteMatch();
+
 
   const list: IEmailItem[] = useSelector((state: IState) =>
     getAllEmails(state)
@@ -23,7 +29,8 @@ export default function Emailitems() {
   }, [dispatch]);
 
   const getEmail = (item: IEmailItem) => {
-    console.log(item);
+    dispatch(loadSelecteEmail(item.id));
+    history.push(`${url}/${item.id}`);
   };
 
   return (
@@ -40,18 +47,7 @@ export default function Emailitems() {
             </ListItemAvatar>
             <ListItemText
               primary={item.subject}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textPrimary"
-                  >
-                    Content
-                  </Typography>
-                  {item.description}
-                </React.Fragment>
-              }
+             
             />
           </ListItem>
           {list.length - 1 === index ? null : (
