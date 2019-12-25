@@ -1,29 +1,33 @@
-Creating a basic todo application, screenshot below:
 
+## Desktop Performance:
 
 <img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Performance.PNG" />
 
 
-Email module:
+## Email module:
+
 <img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/emailmodule.gif" />
   
-  
+
+## Mobile View:
+
 <img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Mobile%20device.PNG"/>
 
-This application is built using create-react-app.
-It will cover all possible scenarios, that are:
-1. Lazy loading routes
-2. Re-Usability of components
-3. Stateful and Stateless component architecture
-4. Http call using axios
-5. Accessibility
-6. Best practices
-7. Performance
-8. Suspense
-9. Redux
-10. Routing i.e. parameter and query based
-11. useState and useEffect
-12. function components
+## Application covers:
+
+1. Lazy loading components
+2. Nested routing
+3. Re-Usability of components
+4. Stateful and Stateless component architecture
+5. Async call using axios
+6. Accessibility
+7. Best practices
+8. Performance
+9. Suspense
+10. React-Redux
+11. Parameter based routing i.e. parameter and query based
+12. React hooks i.e. useState and useEffect
+13. Function based components using react hooks 
 
 ## Implementations
 This section contains the scenario we require and how we achieve them.
