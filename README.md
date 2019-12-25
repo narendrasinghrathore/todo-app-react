@@ -13,8 +13,11 @@ Creating a basic todo application, screenshot below:
 
 <img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Performance.PNG" />
 
-  
 
+
+
+Email module:
+<img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/emailmodule.gif" />
   
 
   
