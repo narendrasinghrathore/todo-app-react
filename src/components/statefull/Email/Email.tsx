@@ -19,11 +19,11 @@ export default function Email() {
         item
         xs={3}
       >
-        <Paper>
-          <SuspenseContainer>
+        <SuspenseContainer>
+          <Paper square>
             <Emailitems />
-          </SuspenseContainer>
-        </Paper>
+          </Paper>
+        </SuspenseContainer>
       </Grid>
       <Grid item xs={9}>
         <Switch>
