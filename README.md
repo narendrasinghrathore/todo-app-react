@@ -31,7 +31,7 @@ This section contains the scenario we require and how we achieve them.
 1. Dynamic background color in `<Login/>` component, based on color selection from `<ThemeWidget/>` component
 2. Snackbar notification using redux-store, `<NotificationSnackbar/>`. We can dispatch action that contains message, auto-hide in millisecond, status to show Snackbar. It can be used to display application related notification i.e success, error, warning etc.
 3. If route not match, redirect to `<PageNotFound />` component.
-4. Implementation of EMAIL module [here](https://apptodoreact.firebaseapp.com/email)
+4. Implementation of EMAIL module [here](https://apptodoreact.firebaseapp.com/email). It contains nested routing example using react-router-dom. Uses async call to update emails list in store (i.e. redux state management).
 
 ## Available Scripts
 In the project directory, you can run:
