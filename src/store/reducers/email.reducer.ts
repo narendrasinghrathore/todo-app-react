@@ -1,12 +1,12 @@
 import { IEmailAppState } from "../../interfaces/EmailAppState";
-import { LOAD_EMAILS_SUCCESS, LOAD_EMAILS_FAIL, LOAD_EMAILS, LOAD_SELECTED_EMAIL } from "../actions/email.action";
+import { LOAD_EMAILS_SUCCESS, LOAD_EMAILS_FAIL, LOAD_EMAILS, LOAD_SELECTED_EMAIL, LOAD_SELECTED_EMAIL_FAIL, LOAD_SELECTED_EMAIL_SUCCESS } from "../actions/email.action";
 
 const initialState: IEmailAppState = {
     emails: [],
     loadingEmails: false,
     loadingSelectedEmail: false,
     allEmailLoaded: false,
-    selected: undefined
+    selectedEmail: undefined
 }
 
 const email = (state = initialState, action: any) => {
@@ -25,7 +25,7 @@ const email = (state = initialState, action: any) => {
                 ...state,
                 emails: [...action.data],
                 loadingEmails: false,
-                allEmailLoaded:true
+                allEmailLoaded: true
 
             }
 
@@ -38,10 +38,24 @@ const email = (state = initialState, action: any) => {
 
         }
         case LOAD_SELECTED_EMAIL: {
-            const selected = state.emails.find(item => item.id === action.id);
             return {
                 ...state,
-                selected
+                loadingSelectedEmail: true
+            }
+        }
+        case LOAD_SELECTED_EMAIL_SUCCESS: {
+            const selectedEmail = { ...action.item };
+            return {
+                ...state,
+                loadingSelectedEmail: false,
+                selectedEmail
+            }
+        }
+        case LOAD_SELECTED_EMAIL_FAIL: {
+            return {
+                ...state,
+                loadingSelectedEmail: false,
+                selectedEmail: undefined
             }
         }
         default:

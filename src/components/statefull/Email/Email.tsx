@@ -8,10 +8,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import noMailSelectedImage from "../../../assets/mailbox.svg";
 import { IEmailItem } from "../../../interfaces/EmailItems";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getAllEmails,
-  getSelectedEmail
-} from "../../../store/selectors/email.selector";
+import { getAllEmails } from "../../../store/selectors/email.selector";
 import { IState } from "../../../interfaces/State";
 import { getEmails } from "../../../store/actions/email.action";
 const ShowEmail = lazy(() => import("../../stateless/ShowEmail/ShowEmail"));
@@ -25,8 +22,6 @@ export default function Email() {
   const list: IEmailItem[] = useSelector((state: IState) =>
     getAllEmails(state)
   );
-
-  const selectedEmail = useSelector((state: IState) => getSelectedEmail(state));
 
   useEffect(() => {
     dispatch(getEmails());
@@ -71,7 +66,7 @@ export default function Email() {
             render={() => (
               <Paper>
                 <SuspenseContainer>
-                  <ShowEmail selectedEmail={selectedEmail} />
+                  <ShowEmail />
                 </SuspenseContainer>
               </Paper>
             )}

@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import { IEmailItem } from "../../../interfaces/EmailItems";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSelecteEmail } from "../../../store/actions/email.action";
+import { getSelectedEmailAction } from "../../../store/actions/email.action";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { IState } from "../../../interfaces/State";
 import { getSelectedEmail } from "../../../store/selectors/email.selector";
@@ -23,8 +23,11 @@ export default function Emailitems({ list }: { list: IEmailItem[] }) {
     if (selectedEmail && selectedEmail.id === item.id) {
       return;
     }
-    dispatch(loadSelecteEmail(item.id));
-    history.push(`${url}/${item.id}`);
+    dispatch(
+      getSelectedEmailAction(item.id, () => {
+        history.push(`${url}/${item.id}`);
+      })
+    );
   };
 
   return (

@@ -2,7 +2,7 @@ import { IEmailItem } from "./EmailItems";
 
 export interface IEmailAppState {
     emails: IEmailItem[],
-    selected: IEmailItem | undefined,
+    selectedEmail: IEmailItem | undefined,
     loadingEmails: boolean,
     loadingSelectedEmail: boolean;
     allEmailLoaded: boolean;

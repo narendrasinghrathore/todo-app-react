@@ -1,6 +1,6 @@
 import { IState } from "../../interfaces/State";
 
-export const getSelectedEmail = (state: IState) => state.email.selected
+export const getSelectedEmail = (state: IState) => state.email.selectedEmail;
 
 export const getAllEmails = (state: IState) => state.email.emails
 

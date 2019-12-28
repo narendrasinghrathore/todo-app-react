@@ -9,6 +9,8 @@ export const LOAD_EMAILS_SUCCESS = `${EMAIL} LOADING EMAILS SUCCESS`;
 export const LOAD_EMAILS_FAIL = `${EMAIL} LOADING EMAILS FAIL`;
 
 export const LOAD_SELECTED_EMAIL = `${EMAIL} LOADING SELECTED EMAIL`;
+export const LOAD_SELECTED_EMAIL_SUCCESS = `${EMAIL} LOADING SELECTED EMAIL SUCCESS`;
+export const LOAD_SELECTED_EMAIL_FAIL = `${EMAIL} LOADING SELECTED EMAIL FAIL`;
 
 export const loadingEmails = () => ({
   type: LOAD_EMAILS
@@ -28,6 +30,14 @@ export const loadSelecteEmail = (id: string | number) => ({
   type: LOAD_SELECTED_EMAIL,
   id
 });
+export const loadSelecteEmailSuccessAction = (item: IEmailItem) => ({
+  type: LOAD_SELECTED_EMAIL_SUCCESS,
+  item
+});
+export const loadSelectedEmailFailAction = () => ({
+  type: LOAD_SELECTED_EMAIL_FAIL
+});
+
 
 const list: IEmailItem[] = [
   {
@@ -119,9 +129,24 @@ export const getEmails = (callback = () => { }) => {
 };
 
 
-export const getSelectedEmailAction = (id: string, callback: Function) => {
+export const getSelectedEmailAction = (id: string, found = () => { }, notFound = () => { }) => {
   return (dispatch: any) => {
     dispatch(loadSelecteEmail(id));
-    callback();
+    return new Promise((resolve, reject) => {
+      try {
+        const selectedEmail = list.find(item => item.id === id);
+        if (selectedEmail) {
+          dispatch(loadSelecteEmailSuccessAction(selectedEmail))
+          found();
+          resolve();
+        } else {
+          dispatch(loadSelectedEmailFailAction());
+          notFound();
+          reject();
+        };
+      } catch (err) {
+        reject();
+      }
+    });
   }
 }
