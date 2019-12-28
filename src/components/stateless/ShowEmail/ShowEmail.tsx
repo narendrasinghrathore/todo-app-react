@@ -41,7 +41,11 @@ export default function ShowEmail() {
       <Grid container item xs={12} spacing={0}>
         <Grid item xs={12}>
           <Paper style={defaultStyling as any} square>
-            <Avatar component="span" src={selectedEmail?.avatar}>
+            <Avatar
+              alt={selectedEmail?.id}
+              component="span"
+              src={selectedEmail?.avatar}
+            >
               ?
             </Avatar>
             <Typography component="span">From: {selectedEmail?.id}</Typography>
