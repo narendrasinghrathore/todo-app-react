@@ -5,4 +5,5 @@ export interface IEmailAppState {
     selected: IEmailItem | undefined,
     loadingEmails: boolean,
     loadingSelectedEmail: boolean;
+    allEmailLoaded: boolean;
 }

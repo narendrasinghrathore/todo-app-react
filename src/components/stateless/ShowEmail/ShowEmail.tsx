@@ -2,20 +2,20 @@ import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Avatar, Typography } from "@material-ui/core";
-import { getSelectedEmail } from "../../../store/selectors/email.selector";
-import { IState } from "../../../interfaces/State";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { IEmailItem } from "../../../interfaces/EmailItems";
+
 export default function ShowEmail(props: any) {
+  const { selectedEmail }: { selectedEmail: IEmailItem } = props;
   const defaultStyling = { boxSizing: "border-box", padding: "10px" };
-  const selectedEmail = useSelector((state: IState) => getSelectedEmail(state));
   const history = useHistory();
+
   useEffect(() => {
-    // if selectedEmail undefined replace url /email
     if (selectedEmail === undefined) {
       history.replace("/email");
     }
-  }, [history, selectedEmail]);
+  }, [selectedEmail, history]);
+
   return (
     <React.Fragment>
       <Grid container item xs={12} spacing={0}>

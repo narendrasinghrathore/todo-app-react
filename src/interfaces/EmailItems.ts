@@ -1,7 +1,7 @@
-export interface IEmailItem{
+export interface IEmailItem {
     avatar?: string;
     subject?: string;
     description?: string;
-    id: number;
+    id: string;
 
 }

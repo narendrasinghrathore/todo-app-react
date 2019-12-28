@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
@@ -6,12 +6,32 @@ import SuspenseContainer from "../../../shared/Loader/Loader";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 import noMailSelectedImage from "../../../assets/mailbox.svg";
+import { IEmailItem } from "../../../interfaces/EmailItems";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getAllEmails,
+  getSelectedEmail
+} from "../../../store/selectors/email.selector";
+import { IState } from "../../../interfaces/State";
+import { getEmails } from "../../../store/actions/email.action";
 const ShowEmail = lazy(() => import("../../stateless/ShowEmail/ShowEmail"));
 
 const Emailitems = lazy(() => import("../../stateless/EmailItems/EmailItems"));
 
 export default function Email() {
   const { path } = useRouteMatch();
+  const dispatch = useDispatch();
+
+  const list: IEmailItem[] = useSelector((state: IState) =>
+    getAllEmails(state)
+  );
+
+  const selectedEmail = useSelector((state: IState) => getSelectedEmail(state));
+
+  useEffect(() => {
+    dispatch(getEmails());
+  }, [dispatch]);
+
   return (
     <Grid container>
       <Grid
@@ -21,7 +41,7 @@ export default function Email() {
       >
         <SuspenseContainer>
           <Paper square>
-            <Emailitems />
+            <Emailitems list={list} />
           </Paper>
         </SuspenseContainer>
       </Grid>
@@ -46,13 +66,16 @@ export default function Email() {
               />
             </section>
           </Route>
-          <Route path={`${path}/:id`}>
-            <Paper>
-              <SuspenseContainer>
-                <ShowEmail />
-              </SuspenseContainer>
-            </Paper>
-          </Route>
+          <Route
+            path={`${path}/:id`}
+            render={() => (
+              <Paper>
+                <SuspenseContainer>
+                  <ShowEmail selectedEmail={selectedEmail} />
+                </SuspenseContainer>
+              </Paper>
+            )}
+          />
         </Switch>
       </Grid>
     </Grid>

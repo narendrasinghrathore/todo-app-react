@@ -5,6 +5,7 @@ const initialState: IEmailAppState = {
     emails: [],
     loadingEmails: false,
     loadingSelectedEmail: false,
+    allEmailLoaded: false,
     selected: undefined
 }
 
@@ -14,7 +15,8 @@ const email = (state = initialState, action: any) => {
         case LOAD_EMAILS: {
             return {
                 ...state,
-                loadingEmails: true
+                loadingEmails: true,
+                allEmailLoaded: false
             }
 
         }
@@ -22,7 +24,8 @@ const email = (state = initialState, action: any) => {
             return {
                 ...state,
                 emails: [...action.data],
-                loadingEmails: false
+                loadingEmails: false,
+                allEmailLoaded:true
 
             }
 
@@ -30,7 +33,7 @@ const email = (state = initialState, action: any) => {
         case LOAD_EMAILS_FAIL: {
             return {
                 ...state,
-                loadingEmails: false
+                loadingEmails: false,
             }
 
         }
