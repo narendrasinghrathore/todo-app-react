@@ -1,6 +1,6 @@
 import { IEmailItem } from "../../interfaces/EmailItems";
 
-export const EMAIL = "[EMAIL]";
+export const EMAIL = "[EMAIL]: ";
 
 export const LOAD_EMAILS = `${EMAIL} LOADING EMAILS`;
 
@@ -11,6 +11,8 @@ export const LOAD_EMAILS_FAIL = `${EMAIL} LOADING EMAILS FAIL`;
 export const LOAD_SELECTED_EMAIL = `${EMAIL} LOADING SELECTED EMAIL`;
 export const LOAD_SELECTED_EMAIL_SUCCESS = `${EMAIL} LOADING SELECTED EMAIL SUCCESS`;
 export const LOAD_SELECTED_EMAIL_FAIL = `${EMAIL} LOADING SELECTED EMAIL FAIL`;
+
+export const REMOVE_SELECTED_EMAIL_FAIL = `${EMAIL} REMOVE SELECTED EMAIL`;
 
 export const loadingEmails = () => ({
   type: LOAD_EMAILS
@@ -36,6 +38,10 @@ export const loadSelecteEmailSuccessAction = (item: IEmailItem) => ({
 });
 export const loadSelectedEmailFailAction = () => ({
   type: LOAD_SELECTED_EMAIL_FAIL
+});
+
+export const removeSelectedEmailAction = () => ({
+  type: REMOVE_SELECTED_EMAIL_FAIL
 });
 
 

@@ -10,7 +10,9 @@ import { IEmailItem } from "../../../interfaces/EmailItems";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllEmails } from "../../../store/selectors/email.selector";
 import { IState } from "../../../interfaces/State";
-import { getEmails } from "../../../store/actions/email.action";
+import {
+  getEmails
+} from "../../../store/actions/email.action";
 const ShowEmail = lazy(() => import("../../stateless/ShowEmail/ShowEmail"));
 
 const Emailitems = lazy(() => import("../../stateless/EmailItems/EmailItems"));
@@ -25,6 +27,8 @@ export default function Email() {
 
   useEffect(() => {
     dispatch(getEmails());
+
+   
   }, [dispatch]);
 
   return (

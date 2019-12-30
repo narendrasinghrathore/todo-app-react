@@ -4,7 +4,10 @@ import Paper from "@material-ui/core/Paper";
 import { Avatar, Typography } from "@material-ui/core";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedEmailAction } from "../../../store/actions/email.action";
+import {
+  getSelectedEmailAction,
+  removeSelectedEmailAction
+} from "../../../store/actions/email.action";
 import { getSelectedEmail } from "../../../store/selectors/email.selector";
 import { IState } from "../../../interfaces/State";
 
@@ -23,17 +26,37 @@ export default function ShowEmail() {
           id,
           () => {
             //success
-           
           },
           () => {
             //not found
-           
+
+            history.replace("/email");
+          }
+        )
+      );
+    }
+    if (selectedEmail && id && selectedEmail.id !== id) {
+      dispatch(
+        getSelectedEmailAction(
+          id,
+          () => {
+            //success
+          },
+          () => {
+            //not found
+
             history.replace("/email");
           }
         )
       );
     }
   }, [selectedEmail, history, id, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeSelectedEmailAction());
+    };
+  }, [dispatch]);
 
   return (
     <React.Fragment>
