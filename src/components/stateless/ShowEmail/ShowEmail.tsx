@@ -17,18 +17,17 @@ export default function ShowEmail() {
   const selectedEmail = useSelector((state: IState) => getSelectedEmail(state));
 
   useEffect(() => {
-    console.log("called", selectedEmail, id);
     if (selectedEmail === undefined && id) {
       dispatch(
         getSelectedEmailAction(
           id,
           () => {
             //success
-            console.log(selectedEmail);
+           
           },
           () => {
             //not found
-            console.log(selectedEmail);
+           
             history.replace("/email");
           }
         )
