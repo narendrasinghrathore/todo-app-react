@@ -34,7 +34,10 @@ export default function Emailitems({ list }: { list: IEmailItem[] }) {
     <List>
       {list.map((item: IEmailItem, index) => (
         <Fragment key={item.id}>
-          <ListItem
+          <ListItem 
+           style={{
+             backgroundColor: selectedEmail?.id === item.id ? "#dedede" : "#fff"
+           }}
             key={item.id}
             alignItems="flex-start"
             onClick={() => getEmail(item)}
