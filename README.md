@@ -7,6 +7,13 @@
 ## Email module:
 
 <img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/emailmodule.gif" />
+
+
+## Music Player module:
+
+<img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/music-player-module.gif" />
+
+
   
 
 ## Mobile View:
