@@ -6,7 +6,7 @@
 
 ## Email module:
 
-<img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/emailmodule.gif" />
+<img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/email-module-2.gif" />
 
 
 ## Music Player module:
