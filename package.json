@@ -24,6 +24,7 @@
     "react-window": "^1.8.5",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "source-map-explorer": "^2.2.1",
     "styled-components": "^4.4.1",
     "typescript": "^3.7.3"
   },
@@ -31,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze":"source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": "react-app"
