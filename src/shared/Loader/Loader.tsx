@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, memo } from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
 /**
  *
@@ -15,9 +15,9 @@ function Loader(props: any) {
         variant="text"
         width={width}
         height={height}
-      ></Skeleton>
-      <Skeleton variant="text" width={width} height={height}></Skeleton>
-      <Skeleton variant="text" width={widthHalf} height={height}></Skeleton>
+      />
+      <Skeleton variant="text" width={width} height={height} />
+      <Skeleton variant="text" width={widthHalf} height={height} />
     </div>
   );
 }
@@ -26,6 +26,7 @@ function Loader(props: any) {
  * for lazy loading component using React.lazy https://reactjs.org/docs/code-splitting.html
  * @param props children i.e React Component
  */
-export default function SuspenseContainer(props: any) {
+const SuspenseContainer = memo(function SuspenseComponent(props: any) {
   return <Suspense fallback={<Loader />}>{props.children}</Suspense>;
-}
+});
+export default SuspenseContainer;
