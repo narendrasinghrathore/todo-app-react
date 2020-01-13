@@ -5,7 +5,6 @@ import { ImageListItem_ } from "../../../interfaces/ImageListItem";
 import { SimpleDialog } from "../../stateless/Dialog/Dialog";
 import SuspenseContainer from "../../../shared/Loader/Loader";
 import styled from "styled-components";
-import * as firebaseF from "firebase-functions";
 /**
  * Lazy loading components
  */
@@ -92,7 +91,6 @@ export default function TodoImageList() {
         </P>
       ) : (
         <>
-          <p>{firebaseF.config().appName}</p>
           <SimpleDialog
             selectedValue={selectedValue}
             open={open}
