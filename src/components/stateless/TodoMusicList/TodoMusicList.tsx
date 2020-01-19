@@ -35,7 +35,7 @@ const Div = styled.div`
 export default function TodoMusicList(props: any) {
   const { list }: { list: IMusicItem[] } = props;
   const classes = useStyles();
-  const audio = new Audio();
+  const audio = document.querySelector("audio") || new Audio();
 
   const dispatch = useDispatch();
 
@@ -77,7 +77,7 @@ export default function TodoMusicList(props: any) {
     onMediaPlayingEnded();
     dispatch(
       showNotificationAction({
-        message: "Media not found, plaback fail.",
+        message: "Media not found, playback fail.",
         open: true,
         autohide: 2000
       })
@@ -85,6 +85,7 @@ export default function TodoMusicList(props: any) {
   };
 
   const play = (item: IMusicItem) => {
+    audio.currentTime = 0;
     audio.src = item.previewUrl;
     audio.play();
     setPlayingItem(item);
@@ -94,17 +95,13 @@ export default function TodoMusicList(props: any) {
     console.log("Paused");
   };
 
-  // const pausePlay = (item: IMusicItem) => {
-  //   if (pausedItem?.previewUrl === item.previewUrl) {
-  //     audio.play();
-  //     setPauseItem(undefined);
-  //   } else if (item.previewUrl === playingItem?.previewUrl) {
-  //     setPauseItem(item);
-  //   }
-  // };
+  const pausePlay = (item: IMusicItem) => {
+    audio.pause();
+  };
 
   return (
     <>
+      <audio id="audio-player"></audio>
       <NowPlaying
         open={playing}
         content={
@@ -132,7 +129,7 @@ export default function TodoMusicList(props: any) {
                 buffer ? (
                   <HourglassEmptyIcon />
                 ) : (
-                  <PauseCircleOutlineIcon />
+                  <PauseCircleOutlineIcon onClick={() => pausePlay(item)} />
                 )
               ) : (
                 <AlbumIcon onClick={() => play(item)} />
