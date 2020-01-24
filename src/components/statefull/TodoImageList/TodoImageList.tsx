@@ -5,6 +5,11 @@ import { ImageListItem_ } from "../../../interfaces/ImageListItem";
 import { SimpleDialog } from "../../stateless/Dialog/Dialog";
 import SuspenseContainer from "../../../shared/Loader/Loader";
 import styled from "styled-components";
+// Component to pass SVG and use as IconButton
+import CustomSvg from "../../../shared/CustomSvg/CustomSvg";
+
+// SVG imports
+import HdDownloadSvg from '../../../assets/hd.svg';
 /**
  * Lazy loading components
  */
@@ -26,6 +31,7 @@ const A = styled.a`
 `;
 
 export default function TodoImageList() {
+
   const imageGridStyletyle = {
     root: {
       display: "flex",
@@ -78,6 +84,25 @@ export default function TodoImageList() {
     setPageNumber(pageNumber + 1);
   };
 
+  //on download button click
+  const downloadImage = (quality: string) => {
+    if (!selectedValue.download_url) return;
+    const a = document.createElement('a');
+    a.download = `${selectedValue.author}.jpg`;
+    a.target = 'blank';
+    a.href = selectedValue.download_url;
+    a.click();
+  }
+
+  const dialogHeader = () => {
+    return (
+      <>
+        {selectedValue["author"]}
+        <CustomSvg click={() => downloadImage('fullhd')} src={HdDownloadSvg} alt="Download image in HD quality" />
+      </>
+    );
+  }
+
   // Get a specific image by adding /id/{image} to the start of the url.
   // https://picsum.photos/id/1020/367/267
   return (
@@ -90,40 +115,42 @@ export default function TodoImageList() {
           </A>
         </P>
       ) : (
-        <>
-          <SimpleDialog
-            selectedValue={selectedValue}
-            open={open}
-            onClose={handleClose}
-            title={selectedValue["author"]}
-          >
+          <>
+            <SimpleDialog
+              selectedValue={selectedValue}
+              open={open}
+              onClose={handleClose}
+              title={
+                dialogHeader()
+              }
+            >
+              <SuspenseContainer>
+                <ImageLoader
+                  src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
+                  alt={selectedValue.author}
+                  width={1280}
+                  height={720}
+                />
+              </SuspenseContainer>
+            </SimpleDialog>
             <SuspenseContainer>
-              <ImageLoader
-                src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
-                alt={selectedValue.author}
-                width={1280}
-                height={720}
+              <ImageListPaging
+                pageNumber={pageNumber}
+                pageLimit={pageSizeLimit}
+                updatePageSize={updatePageSize}
+                pagePrevious={pagePreviousEvent}
+                pageNext={pageNextEvent}
               />
             </SuspenseContainer>
-          </SimpleDialog>
-          <SuspenseContainer>
-            <ImageListPaging
-              pageNumber={pageNumber}
-              pageLimit={pageSizeLimit}
-              updatePageSize={updatePageSize}
-              pagePrevious={pagePreviousEvent}
-              pageNext={pageNextEvent}
-            />
-          </SuspenseContainer>
-          <SuspenseContainer>
-            <ImageGridList
-              list={list}
-              classes={imageGridStyletyle}
-              openModal={openModal}
-            />
-          </SuspenseContainer>
-        </>
-      )}
+            <SuspenseContainer>
+              <ImageGridList
+                list={list}
+                classes={imageGridStyletyle}
+                openModal={openModal}
+              />
+            </SuspenseContainer>
+          </>
+        )}
     </>
   );
 

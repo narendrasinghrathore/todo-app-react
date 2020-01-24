@@ -57,7 +57,7 @@ export default function Login() {
    */
   const history = useHistory();
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  let { from } = location.state as any || { from: { pathname: "/" } };
 
   const loginInProcess = useSelector((state: IState) =>
     loginProcessSelector(state)
@@ -134,8 +134,8 @@ export default function Login() {
                     color={color}
                   />
                 ) : (
-                  <LockOpenIcon style={{ marginRight: "5px" }} />
-                )}
+                    <LockOpenIcon style={{ marginRight: "5px" }} />
+                  )}
                 sign in
               </Fab>
             </Grid>

@@ -70,7 +70,7 @@ export const RouteConfig: IRouteConfig[] = [
     label: "Images",
     value: "Browse images",
     goto: "/images",
-    isProtected: true,
+    isProtected: false,
     visible: true
   },
   {
