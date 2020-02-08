@@ -34,7 +34,8 @@
 10. React-Redux
 11. Parameter based routing i.e. parameter and query based
 12. React hooks i.e. useState and useEffect
-13. Function based components using react hooks 
+13. Function based components using react hooks
+14. Intersection Observer API
 
 ## Implementations
 This section contains the scenario we require and how we achieve them.
@@ -43,6 +44,7 @@ This section contains the scenario we require and how we achieve them.
 2. Snackbar notification using redux-store, `<NotificationSnackbar/>`. We can dispatch action that contains message, auto-hide in millisecond, status to show Snackbar. It can be used to display application related notification i.e success, error, warning etc.
 3. If route not match, redirect to `<PageNotFound />` component.
 4. Implementation of EMAIL module [here](https://apptodoreact.firebaseapp.com/email). It contains nested routing example using react-router-dom. Uses async call to update emails list in store (i.e. redux state management).
+5. Using Intersection Observer API, we have implemented infinite scrolling feature in image module
 
 ## Available Scripts
 In the project directory, you can run:
