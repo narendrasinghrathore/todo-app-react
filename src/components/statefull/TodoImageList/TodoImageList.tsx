@@ -9,15 +9,12 @@ import styled from "styled-components";
 import CustomSvgIconButton from "../../../shared/CustomSvg/CustomSvg";
 
 // SVG imports
-import HdDownloadSvg from '../../../assets/hd.svg';
+import HdDownloadSvg from "../../../assets/hd.svg";
 /**
  * Lazy loading components
  */
 const ImageGridList = lazy(() =>
   import("../../stateless/ImageGridList/ImageGridList")
-);
-const ImageListPaging = lazy(() =>
-  import("../../stateless/ImageListPaging/ImageListPaging")
 );
 const ImageLoader = lazy(() => import("../../../shared/ImageLoading"));
 
@@ -31,7 +28,6 @@ const A = styled.a`
 `;
 
 export default function TodoImageList() {
-
   const imageGridStyletyle = {
     root: {
       display: "flex",
@@ -48,7 +44,7 @@ export default function TodoImageList() {
 
   const [isProgress, setIsProgress] = useState(false);
 
-  let [pageSizeLimit, setPageSizeLimit] = useState(10);
+  const pageSizeLimit = 10;
 
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -69,16 +65,6 @@ export default function TodoImageList() {
     setSelectedValue(item);
   };
 
-  const updatePageSize = (val: number) => {
-    setPageSizeLimit(val);
-  };
-
-  const pagePreviousEvent = () => {
-    const page = pageNumber > 1 ? -1 : 0;
-    setPageNumber(pageNumber + page);
-    GetImages(pageNumber, pageSizeLimit);
-  };
-
   const pageNextEvent = () => {
     if (isProgress) return;
     setPageNumber(pageNumber + 1);
@@ -88,23 +74,25 @@ export default function TodoImageList() {
   //on download button click
   const downloadImage = (quality: string) => {
     if (!selectedValue.download_url) return;
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.download = `${selectedValue.author}.jpg`;
-    a.target = 'blank';
+    a.target = "blank";
     a.href = selectedValue.download_url;
     a.click();
-  }
+  };
 
   const dialogHeader = () => {
     return (
       <>
         {selectedValue["author"]}
-        <CustomSvgIconButton click={() => downloadImage('fullhd')} src={HdDownloadSvg} alt="Download image in HD quality" />
+        <CustomSvgIconButton
+          click={() => downloadImage("fullhd")}
+          src={HdDownloadSvg}
+          alt="Download image in HD quality"
+        />
       </>
     );
-  }
-
-
+  };
 
   // Get a specific image by adding /id/{image} to the start of the url.
   // https://picsum.photos/id/1020/367/267
@@ -113,53 +101,38 @@ export default function TodoImageList() {
       {imagesLoadingError ? (
         <P>
           We are facing some network error,{" "}
-          <A onClick={() => pageNextEvent()}>
-            click here to try again
-          </A>
+          <A onClick={() => pageNextEvent()}>click here to try again</A>
         </P>
       ) : (
-          <>
-            <SimpleDialog
-              selectedValue={selectedValue}
-              open={open}
-              onClose={handleClose}
-              title={
-                dialogHeader()
-              }
-            >
-              <SuspenseContainer>
-                <ImageLoader
-                  src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
-                  alt={selectedValue.author}
-                  width={1280}
-                  height={720}
-                />
-              </SuspenseContainer>
-            </SimpleDialog>
+        <>
+          <SimpleDialog
+            selectedValue={selectedValue}
+            open={open}
+            onClose={handleClose}
+            title={dialogHeader()}
+          >
             <SuspenseContainer>
-              <ImageListPaging
-                pageNumber={pageNumber}
-                pageLimit={pageSizeLimit}
-                updatePageSize={updatePageSize}
-                pagePrevious={pagePreviousEvent}
-                pageNext={pageNextEvent}
+              <ImageLoader
+                src={`https://picsum.photos/id/${selectedValue.id}/1280/720`}
+                alt={selectedValue.author}
+                width={1280}
+                height={720}
               />
             </SuspenseContainer>
-            <SuspenseContainer>
-              <ImageGridList
-                getImages={() => pageNextEvent()}
-                list={list}
-                classes={imageGridStyletyle}
-                openModal={openModal}
-                isLoading={isProgress}
-              />
-            </SuspenseContainer>
-          </>
-        )}
+          </SimpleDialog>
+          <SuspenseContainer>
+            <ImageGridList
+              getImages={() => pageNextEvent()}
+              list={list}
+              classes={imageGridStyletyle}
+              openModal={openModal}
+              isLoading={isProgress}
+            />
+          </SuspenseContainer>
+        </>
+      )}
     </>
   );
-
-
 
   function GetImages(pageNumber: number, pageSizeLimit: number) {
     setImagesLodingError(false);
