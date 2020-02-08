@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy } from "react";
+import React, { useState, lazy } from "react";
 import "./TodoImageList.css";
 import AxiosHttp from "../../../utils/http.util";
 import { ImageListItem_ } from "../../../interfaces/ImageListItem";
@@ -6,7 +6,7 @@ import { SimpleDialog } from "../../stateless/Dialog/Dialog";
 import SuspenseContainer from "../../../shared/Loader/Loader";
 import styled from "styled-components";
 // Component to pass SVG and use as IconButton
-import CustomSvg from "../../../shared/CustomSvg/CustomSvg";
+import CustomSvgIconButton from "../../../shared/CustomSvg/CustomSvg";
 
 // SVG imports
 import HdDownloadSvg from '../../../assets/hd.svg';
@@ -37,23 +37,25 @@ export default function TodoImageList() {
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "center",
-      height: "80vh",
-      overflow: "auto",
-      alignContent: " flex-start"
+      alignContent: " flex-start",
+      minHeight: "50vh"
     },
     gridItem: {
       padding: 2
     }
   };
-  let [list, setList] = useState([]);
+  const [list, setList] = useState([]);
+
+  const [isProgress, setIsProgress] = useState(false);
 
   let [pageSizeLimit, setPageSizeLimit] = useState(10);
 
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
 
   const [imagesLoadingError, setImagesLodingError] = useState(false);
 
   const [open, setOpen] = React.useState(false);
+
   const [selectedValue, setSelectedValue] = React.useState<ImageListItem_>({
     author: "None"
   });
@@ -61,10 +63,6 @@ export default function TodoImageList() {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    return GetImages(pageNumber, pageSizeLimit);
-  }, [pageNumber, pageSizeLimit]);
 
   const openModal = (item: ImageListItem_) => {
     setOpen(true);
@@ -78,10 +76,13 @@ export default function TodoImageList() {
   const pagePreviousEvent = () => {
     const page = pageNumber > 1 ? -1 : 0;
     setPageNumber(pageNumber + page);
+    GetImages(pageNumber, pageSizeLimit);
   };
 
   const pageNextEvent = () => {
+    if (isProgress) return;
     setPageNumber(pageNumber + 1);
+    GetImages(pageNumber, pageSizeLimit);
   };
 
   //on download button click
@@ -98,10 +99,12 @@ export default function TodoImageList() {
     return (
       <>
         {selectedValue["author"]}
-        <CustomSvg click={() => downloadImage('fullhd')} src={HdDownloadSvg} alt="Download image in HD quality" />
+        <CustomSvgIconButton click={() => downloadImage('fullhd')} src={HdDownloadSvg} alt="Download image in HD quality" />
       </>
     );
   }
+
+
 
   // Get a specific image by adding /id/{image} to the start of the url.
   // https://picsum.photos/id/1020/367/267
@@ -110,7 +113,7 @@ export default function TodoImageList() {
       {imagesLoadingError ? (
         <P>
           We are facing some network error,{" "}
-          <A onClick={() => GetImages(pageNumber, pageSizeLimit)}>
+          <A onClick={() => pageNextEvent()}>
             click here to try again
           </A>
         </P>
@@ -144,9 +147,11 @@ export default function TodoImageList() {
             </SuspenseContainer>
             <SuspenseContainer>
               <ImageGridList
+                getImages={() => pageNextEvent()}
                 list={list}
                 classes={imageGridStyletyle}
                 openModal={openModal}
+                isLoading={isProgress}
               />
             </SuspenseContainer>
           </>
@@ -154,21 +159,27 @@ export default function TodoImageList() {
     </>
   );
 
+
+
   function GetImages(pageNumber: number, pageSizeLimit: number) {
     setImagesLodingError(false);
+    setIsProgress(true);
     const http = new AxiosHttp();
+
     return http.request(
       {
         method: "GET",
         url: `https://picsum.photos/v2/list?page=${pageNumber}&limit=${pageSizeLimit}`
       },
       (data: any) => {
-        const { data: list } = data;
-        setList(list);
+        const { data: imagesList } = data;
+        setList(list.concat(...imagesList));
+        setIsProgress(false);
       },
       (err: any) => {
         setImagesLodingError(true);
         console.log(err);
+        setIsProgress(false);
       }
     );
   }
