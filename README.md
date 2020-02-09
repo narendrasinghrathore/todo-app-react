@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.org/narendrasinghrathore/todo-app-react.svg?branch=master)](https://travis-ci.org/narendrasinghrathore/todo-app-react)
+
 ## Desktop Performance:
 
 <img  src="https://github.com/narendrasinghrathore/todo-app-react/blob/master/Performance.PNG" />
