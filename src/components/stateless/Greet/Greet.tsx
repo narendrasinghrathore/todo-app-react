@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { greetUser, IDay } from "../../../utils/core.utils";
 import { IGreet } from "../../../interfaces/Greet";
 // logo component(s) import
@@ -8,42 +8,53 @@ import Logo from "../Logo/Logo";
 import logoNight from "../../../assets/night.svg";
 import logoNoon from "../../../assets/noon.svg";
 // css
-import './Greet.css';
+import "./Greet.css";
+import { MyThemeContext } from "../../../context/ThemeManager";
 
-export default class Greet extends React.Component<IGreet> {
-  message: string;
+export default function Greet(props: IGreet) {
+  // Get context
+  const context = useContext(MyThemeContext);
+  // get color from MyThemeContext
+  const { color }: any = context;
+  // based on theme, update the background color of greet div
+  const backgroundColor = (color_: string) => {
+    switch (color_) {
+      case "primary":
+        return "#3f51b5";
+      case "secondary":
+        return "#f50057";
+      default:
+        return "#3f51b5";
+    }
+  };
   /// Greet user with appropriate logo based on hour of day
   /// For morning 0, noon 1, evening 2
-  logo: any;
+  const message = props.name ? `, ${props.name}!` : " !!!";
 
-  constructor(props: any) {
-    super(props);
-    this.message = this.props.name ? `, ${this.props.name}!` : " !!!";
-    this.setLogo();
-  }
-
-  setLogo = () => {
+  // update logo based on time of day
+  const setLogo = () => {
     switch (greetUser()) {
       case IDay.morning:
-        this.logo = <Logo src="" alt="logo morning" />;
-        break;
+        return <Logo src="" alt="logo morning" />;
+
       case IDay.noon:
-        this.logo = <Logo src={logoNoon} alt="logo afternoon" />;
-        break;
+        return <Logo src={logoNoon} alt="logo afternoon" />;
+
       case IDay.evening:
-        this.logo = <Logo src={logoNight} alt="logo night" />;
-        break;
+        return <Logo src={logoNight} alt="logo night" />;
+
       default:
-        this.logo = <Logo src="" alt="logo" />;
+        return <Logo src="" alt="logo" />;
     }
   };
 
-  render() {
-    return (
-      <div className="container">
-        {this.logo}
-        <h1>Hello there{this.message}</h1>
-      </div>
-    );
-  }
+  return (
+    <div
+      style={{ backgroundColor: backgroundColor(color) }}
+      className="container"
+    >
+      {setLogo()}
+      <h1>Hello there{message}</h1>
+    </div>
+  );
 }
