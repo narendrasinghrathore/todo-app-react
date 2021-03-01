@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
       maxWidth: 360,
-      backgroundColor: theme.palette.background.paper
+      backgroundColor: theme.palette.background.paper,
     },
     nested: {
-      paddingLeft: theme.spacing(4)
-    }
+      paddingLeft: theme.spacing(4),
+    },
   })
 );
 
@@ -79,7 +79,7 @@ export default function TodoMusicList(props: any) {
       showNotificationAction({
         message: "Media not found, playback fail.",
         open: true,
-        autohide: 2000
+        autohide: 2000,
       })
     );
   };
@@ -101,7 +101,9 @@ export default function TodoMusicList(props: any) {
 
   return (
     <>
-      <audio id="audio-player"></audio>
+      <audio id="audio-player">
+        <track kind="captions" />
+      </audio>
       <NowPlaying
         open={playing}
         content={

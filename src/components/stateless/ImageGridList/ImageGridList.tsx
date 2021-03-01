@@ -7,7 +7,7 @@ import LoadingSvg from "../../../assets/loading.svg";
 
 export default function ImageGridList(props: any) {
   const pageEnd = (obj: IntersectionObserverEntry[]) => {
-    obj.forEach(entry => {
+    obj.forEach((entry) => {
       if (entry && entry.isIntersecting && entry.intersectionRatio > 0.5) {
         props.getImages();
       }
@@ -21,7 +21,10 @@ export default function ImageGridList(props: any) {
           <div
             style={props.classes.gridItem}
             key={index}
-            onClick={() => props.openModal(tile)}
+            onClick={() => {}}
+            onKeyDown={() => props.openModal(tile)}
+            role="button"
+            tabIndex={0}
           >
             <ImageLoader
               height={200}

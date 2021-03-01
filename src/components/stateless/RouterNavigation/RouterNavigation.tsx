@@ -35,7 +35,7 @@ export default function RouterNavigation(props: any) {
   return (
     <Switch>
       {routes}
-      <Route key={RouteConfig.length}>
+      <Route key={RouteConfig.length} path="**">
         <SuspenseContainer>
           <PageNotFound />
         </SuspenseContainer>
